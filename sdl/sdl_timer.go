@@ -26,9 +26,10 @@ func GetPerformanceCounter() uint64 {
 	return sdlGetPerformanceCounter()
 }
 
-// func GetPerformanceFrequency() uint64 {
-//	return sdlGetPerformanceFrequency()
-// }
+func GetPerformanceFrequency() uint64 {
+	ret, _, _ := purego.SyscallN(sdlGetPerformanceFrequency)
+	return uint64(ret)
+}
 
 // func GetTicks() uint64 {
 //	return sdlGetTicks()
