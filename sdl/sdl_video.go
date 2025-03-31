@@ -474,9 +474,9 @@ func RestoreWindow(window *Window) bool {
 //	return sdlSetWindowHitTest(window, callback, callback_data)
 // }
 
-// func SetWindowIcon(window *Window, icon *Surface) bool {
-//	return sdlSetWindowIcon(window, icon)
-// }
+func SetWindowIcon(window *Window, icon *Surface) bool {
+	return sdlSetWindowIcon(window, icon)
+}
 
 // func SetWindowKeyboardGrab(window *Window, grabbed bool) bool {
 //	return sdlSetWindowKeyboardGrab(window, grabbed)

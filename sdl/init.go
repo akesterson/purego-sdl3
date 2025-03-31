@@ -1028,7 +1028,7 @@ var (
 	// sdlSetWindowFullscreen                   func(*Window, bool) bool
 	// sdlSetWindowFullscreenMode               func(*Window, *DisplayMode) bool
 	// sdlSetWindowHitTest                      func(*Window, HitTest, unsafe.Pointer) bool
-	// sdlSetWindowIcon                         func(*Window, *Surface) bool
+	sdlSetWindowIcon func(*Window, *Surface) bool
 	// sdlSetWindowKeyboardGrab                 func(*Window, bool) bool
 	// sdlSetWindowMaximumSize                  func(*Window, int32, int32) bool
 	// sdlSetWindowMinimumSize                  func(*Window, int32, int32) bool
@@ -2254,7 +2254,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlSetWindowFullscreen, lib, "SDL_SetWindowFullscreen")
 	// purego.RegisterLibFunc(&sdlSetWindowFullscreenMode, lib, "SDL_SetWindowFullscreenMode")
 	// purego.RegisterLibFunc(&sdlSetWindowHitTest, lib, "SDL_SetWindowHitTest")
-	// purego.RegisterLibFunc(&sdlSetWindowIcon, lib, "SDL_SetWindowIcon")
+	purego.RegisterLibFunc(&sdlSetWindowIcon, lib, "SDL_SetWindowIcon")
 	// purego.RegisterLibFunc(&sdlSetWindowKeyboardGrab, lib, "SDL_SetWindowKeyboardGrab")
 	// purego.RegisterLibFunc(&sdlSetWindowMaximumSize, lib, "SDL_SetWindowMaximumSize")
 	// purego.RegisterLibFunc(&sdlSetWindowMinimumSize, lib, "SDL_SetWindowMinimumSize")
