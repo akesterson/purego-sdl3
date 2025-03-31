@@ -51,13 +51,14 @@ func CloseIO(context *IOStream) bool {
 //	return sdlIOFromDynamicMem()
 // }
 
-// func IOFromFile(file string, mode string) *IOStream {
-//	return sdlIOFromFile(file, mode)
-// }
+// IOFromFile returns an [IOStream] for the named file. The mode can be "r" for read only.
+func IOFromFile(file string, mode string) *IOStream {
+	return sdlIOFromFile(file, mode)
+}
 
-// func IOFromMem(mem unsafe.Pointer, size uint64) *IOStream {
-//	return sdlIOFromMem(mem, size)
-// }
+func IOFromMem(mem []byte) *IOStream {
+	return sdlIOFromMem(mem, len(mem))
+}
 
 // func IOprintf(context *IOStream, fmt string) uint64 {
 //	return sdlIOprintf(context, fmt)

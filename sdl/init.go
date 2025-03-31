@@ -676,8 +676,8 @@ var (
 	// sdlInsertTrayEntryAt                     func(*TrayMenu, int32, string, TrayEntryFlags) *TrayEntry
 	sdlIOFromConstMem func([]byte, int) *IOStream
 	// sdlIOFromDynamicMem                      func() *IOStream
-	// sdlIOFromFile                            func(string, string) *IOStream
-	// sdlIOFromMem                             func(unsafe.Pointer, uint64) *IOStream
+	sdlIOFromFile func(string, string) *IOStream
+	sdlIOFromMem  func([]byte, int) *IOStream
 	// sdlIOprintf                              func(*IOStream, string) uint64
 	// sdlIOvprintf                             func(*IOStream, string, va_list) uint64
 	// sdlisalnum                               func(int32) int32
@@ -1902,8 +1902,8 @@ func init() {
 	// purego.RegisterLibFunc(&sdlInsertTrayEntryAt, lib, "SDL_InsertTrayEntryAt")
 	purego.RegisterLibFunc(&sdlIOFromConstMem, lib, "SDL_IOFromConstMem")
 	// purego.RegisterLibFunc(&sdlIOFromDynamicMem, lib, "SDL_IOFromDynamicMem")
-	// purego.RegisterLibFunc(&sdlIOFromFile, lib, "SDL_IOFromFile")
-	// purego.RegisterLibFunc(&sdlIOFromMem, lib, "SDL_IOFromMem")
+	purego.RegisterLibFunc(&sdlIOFromFile, lib, "SDL_IOFromFile")
+	purego.RegisterLibFunc(&sdlIOFromMem, lib, "SDL_IOFromMem")
 	// purego.RegisterLibFunc(&sdlIOprintf, lib, "SDL_IOprintf")
 	// purego.RegisterLibFunc(&sdlIOvprintf, lib, "SDL_IOvprintf")
 	// purego.RegisterLibFunc(&sdlisalnum, lib, "SDL_isalnum")
