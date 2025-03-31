@@ -51,7 +51,7 @@ func CloseIO(context *IOStream) bool {
 //	return sdlIOFromDynamicMem()
 // }
 
-// IOFromFile returns an [IOStream] for the named file. The mode can be "r" for read only.
+// IOFromFile returns an [IOStream] for the named file. The mode can be "r" for read-only.
 func IOFromFile(file string, mode string) *IOStream {
 	return sdlIOFromFile(file, mode)
 }
