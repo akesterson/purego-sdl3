@@ -110,6 +110,15 @@ const (
 	WindowNotFocusable      WindowFlags = 0x0000000080000000
 )
 
+const (
+	WindowPosCenteredMask = 0x2FFF0000
+	WindowPosCentered     = WindowPosCenteredMask
+)
+
+func WindowPosCenteredDisplay(displayID DisplayID) uint32 {
+	return WindowPosCenteredMask | uint32(displayID)
+}
+
 // DestroyWindow destroys a window.
 func DestroyWindow(window *Window) {
 	sdlDestroyWindow(window)
