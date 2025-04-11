@@ -388,7 +388,7 @@ func RenderDebugTextFormat(renderer *Renderer, x float32, y float32, format stri
 	return sdlRenderDebugTextFormat(renderer, x, y, fmt.Sprintf(format, a...))
 }
 
-func RenderFillRects(renderer *Renderer, rects ...FRect) bool {
+func RenderFillRects(renderer *Renderer, rects []FRect) bool {
 	count := len(rects)
 	var rectsPtr *FRect
 	if count > 0 {
@@ -472,7 +472,7 @@ func RenderReadPixels(renderer *Renderer, rect *Rect) *Surface {
 	return sdlRenderReadPixels(renderer, rect)
 }
 
-func RenderRects(renderer *Renderer, rects ...FRect) bool {
+func RenderRects(renderer *Renderer, rects []FRect) bool {
 	count := len(rects)
 	var rectsPtr *FRect
 	if count > 0 {
