@@ -444,7 +444,7 @@ func RenderLine(renderer *Renderer, x1 float32, y1 float32, x2 float32, y2 float
 	return sdlRenderLine(renderer, x1, y1, x2, y2)
 }
 
-func RenderLines(renderer *Renderer, points ...FPoint) bool {
+func RenderLines(renderer *Renderer, points []FPoint) bool {
 	count := len(points)
 	var pointsPtr *FPoint
 	if count > 0 {
