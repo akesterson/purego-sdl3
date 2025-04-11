@@ -458,7 +458,7 @@ func RenderPoint(renderer *Renderer, x float32, y float32) bool {
 	return sdlRenderPoint(renderer, x, y)
 }
 
-func RenderPoints(renderer *Renderer, points ...FPoint) bool {
+func RenderPoints(renderer *Renderer, points []FPoint) bool {
 	count := len(points)
 	var pointsPtr *FPoint
 	if count > 0 {
