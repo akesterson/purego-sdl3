@@ -137,9 +137,9 @@ func DuplicateSurface(surface *Surface) *Surface {
 	return sdlDuplicateSurface(surface)
 }
 
-// func FillSurfaceRect(dst *Surface, rect *Rect, color uint32) bool {
-//	return sdlFillSurfaceRect(dst, rect, color)
-// }
+func FillSurfaceRect(dst *Surface, rect *Rect, color uint32) bool {
+	return sdlFillSurfaceRect(dst, rect, color)
+}
 
 // func FillSurfaceRects(dst *Surface, rects *Rect, count int32, color uint32) bool {
 //	return sdlFillSurfaceRects(dst, rects, count, color)

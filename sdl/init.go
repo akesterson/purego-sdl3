@@ -212,7 +212,7 @@ var (
 	// sdlexpf                                  func(float32) float32
 	// sdlfabs                                  func(float64) float64
 	// sdlfabsf                                 func(float32) float32
-	// sdlFillSurfaceRect                       func(*Surface, *Rect, uint32) bool
+	sdlFillSurfaceRect                       func(*Surface, *Rect, uint32) bool
 	// sdlFillSurfaceRects                      func(*Surface, *Rect, int32, uint32) bool
 	sdlFilterEvents func(EventFilter, unsafe.Pointer)
 	// sdlFlashWindow                           func(*Window, FlashOperation) bool
@@ -447,7 +447,7 @@ var (
 	// sdlGetPathInfo                           func(string, *PathInfo) bool
 	sdlGetPerformanceCounter   func() uint64
 	sdlGetPerformanceFrequency uintptr
-	// sdlGetPixelFormatDetails                 func(PixelFormat) *PixelFormatDetails
+	sdlGetPixelFormatDetails   func(PixelFormat) *PixelFormatDetails
 	// sdlGetPixelFormatForMasks                func(int32, uint32, uint32, uint32, uint32) PixelFormat
 	// sdlGetPixelFormatName                    func(PixelFormat) string
 	// sdlGetPlatform                           func() string
@@ -749,7 +749,7 @@ var (
 	// sdlmain                                  func(int32, **byte) int32
 	// sdlmalloc                                func(uint64) unsafe.Pointer
 	// sdlMapGPUTransferBuffer                  func(*GPUDevice, *GPUTransferBuffer, bool) unsafe.Pointer
-	// sdlMapRGB                                func(*PixelFormatDetails, *Palette, uint8, uint8, uint8) uint32
+	sdlMapRGB func(*PixelFormatDetails, *Palette, uint8, uint8, uint8) uint32
 	// sdlMapRGBA                               func(*PixelFormatDetails, *Palette, uint8, uint8, uint8, uint8) uint32
 	// sdlMapSurfaceRGB                         func(*Surface, uint8, uint8, uint8) uint32
 	// sdlMapSurfaceRGBA                        func(*Surface, uint8, uint8, uint8, uint8) uint32
@@ -1438,7 +1438,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlexpf, lib, "SDL_expf")
 	// purego.RegisterLibFunc(&sdlfabs, lib, "SDL_fabs")
 	// purego.RegisterLibFunc(&sdlfabsf, lib, "SDL_fabsf")
-	// purego.RegisterLibFunc(&sdlFillSurfaceRect, lib, "SDL_FillSurfaceRect")
+	purego.RegisterLibFunc(&sdlFillSurfaceRect, lib, "SDL_FillSurfaceRect")
 	// purego.RegisterLibFunc(&sdlFillSurfaceRects, lib, "SDL_FillSurfaceRects")
 	purego.RegisterLibFunc(&sdlFilterEvents, lib, "SDL_FilterEvents")
 	// purego.RegisterLibFunc(&sdlFlashWindow, lib, "SDL_FlashWindow")
@@ -1673,7 +1673,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlGetPathInfo, lib, "SDL_GetPathInfo")
 	purego.RegisterLibFunc(&sdlGetPerformanceCounter, lib, "SDL_GetPerformanceCounter")
 	sdlGetPerformanceFrequency = shared.Get(lib, "SDL_GetPerformanceFrequency")
-	// purego.RegisterLibFunc(&sdlGetPixelFormatDetails, lib, "SDL_GetPixelFormatDetails")
+	purego.RegisterLibFunc(&sdlGetPixelFormatDetails, lib, "SDL_GetPixelFormatDetails")
 	// purego.RegisterLibFunc(&sdlGetPixelFormatForMasks, lib, "SDL_GetPixelFormatForMasks")
 	// purego.RegisterLibFunc(&sdlGetPixelFormatName, lib, "SDL_GetPixelFormatName")
 	// purego.RegisterLibFunc(&sdlGetPlatform, lib, "SDL_GetPlatform")
@@ -1975,7 +1975,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlmain, lib, "SDL_main")
 	// purego.RegisterLibFunc(&sdlmalloc, lib, "SDL_malloc")
 	// purego.RegisterLibFunc(&sdlMapGPUTransferBuffer, lib, "SDL_MapGPUTransferBuffer")
-	// purego.RegisterLibFunc(&sdlMapRGB, lib, "SDL_MapRGB")
+	purego.RegisterLibFunc(&sdlMapRGB, lib, "SDL_MapRGB")
 	// purego.RegisterLibFunc(&sdlMapRGBA, lib, "SDL_MapRGBA")
 	// purego.RegisterLibFunc(&sdlMapSurfaceRGB, lib, "SDL_MapSurfaceRGB")
 	// purego.RegisterLibFunc(&sdlMapSurfaceRGBA, lib, "SDL_MapSurfaceRGBA")
