@@ -261,7 +261,7 @@ var (
 	// sdlGetAudioStreamOutputChannelMap        func(*AudioStream, *int32) *int32
 	// sdlGetAudioStreamProperties              func(*AudioStream) PropertiesID
 	// sdlGetAudioStreamQueued                  func(*AudioStream) int32
-	// sdlGetBasePath                           func() string
+	sdlGetBasePath               func() string
 	sdlGetBooleanProperty        func(PropertiesID, string, bool) bool
 	sdlGetCameraDriver           func(int32) string
 	sdlGetCameraFormat           func(*Camera, *CameraSpec) bool
@@ -1487,7 +1487,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlGetAudioStreamOutputChannelMap, lib, "SDL_GetAudioStreamOutputChannelMap")
 	// purego.RegisterLibFunc(&sdlGetAudioStreamProperties, lib, "SDL_GetAudioStreamProperties")
 	// purego.RegisterLibFunc(&sdlGetAudioStreamQueued, lib, "SDL_GetAudioStreamQueued")
-	// purego.RegisterLibFunc(&sdlGetBasePath, lib, "SDL_GetBasePath")
+	purego.RegisterLibFunc(&sdlGetBasePath, lib, "SDL_GetBasePath")
 	purego.RegisterLibFunc(&sdlGetBooleanProperty, lib, "SDL_GetBooleanProperty")
 	purego.RegisterLibFunc(&sdlGetCameraDriver, lib, "SDL_GetCameraDriver")
 	purego.RegisterLibFunc(&sdlGetCameraFormat, lib, "SDL_GetCameraFormat")
