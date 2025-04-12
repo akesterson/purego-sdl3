@@ -405,7 +405,7 @@ func RenderGeometry(renderer *Renderer, texture *Texture, vertices []Vertex, ind
 		verticesPtr = &vertices[0]
 	}
 
-	numIndices := len(vertices)
+	numIndices := len(indices)
 	var indicesPtr *int32
 	if numIndices > 0 {
 		indicesPtr = &indices[0]
