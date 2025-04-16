@@ -56,7 +56,7 @@ func main() {
 			}
 		}
 
-		dstRect := sdl.FRect{0, 0, float32(texture.W), float32(texture.H)}
+		dstRect := sdl.FRect{X: 0, Y: 0, W: float32(texture.W), H: float32(texture.H)}
 
 		var viewport sdl.Rect
 
