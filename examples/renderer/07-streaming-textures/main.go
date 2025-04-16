@@ -50,13 +50,13 @@ func main() {
 
 		// we'll have some textures move around over a few seconds.
 		var direction float32
-		if now % 2000 >= 1000 {
+		if now%2000 >= 1000 {
 			direction = 1
 		} else {
 			direction = -1
 		}
 
-		scale := (float32(int(now % 1000) - 500) / 500) * direction
+		scale := (float32(int(now%1000)-500) / 500) * direction
 
 		// To update a streaming texture, you need to lock it first. This gets you access to the pixels.
 		// Note that this is considered a _write-only_ operation: the buffer you get from locking
@@ -72,7 +72,7 @@ func main() {
 			r.W = TextureSize
 			r.H = TextureSize / 10
 			r.X = 0
-			r.Y = int32(float32(TextureSize - r.H) * ((scale + 1.0) / 2.0))
+			r.Y = int32(float32(TextureSize-r.H) * ((scale + 1.0) / 2.0))
 			sdl.FillSurfaceRect(surface, &r, sdl.MapRGB(sdl.GetPixelFormatDetails(surface.Format), nil, 0, 255, 0))
 			sdl.UnlockTexture(texture)
 		}
@@ -85,8 +85,8 @@ func main() {
 		// stamp, there isn't a limit to the number of times you can draw with it.
 
 		// center this one.
-		dstRect.X = float32(WindowWidth - TextureSize) / 2.0
-		dstRect.Y = float32(WindowHeight - TextureSize) / 2.0
+		dstRect.X = float32(WindowWidth-TextureSize) / 2.0
+		dstRect.Y = float32(WindowHeight-TextureSize) / 2.0
 		dstRect.W, dstRect.H = float32(TextureSize), float32(TextureSize)
 		sdl.RenderTexture(renderer, texture, nil, &dstRect)
 

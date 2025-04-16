@@ -212,7 +212,7 @@ var (
 	// sdlexpf                                  func(float32) float32
 	// sdlfabs                                  func(float64) float64
 	// sdlfabsf                                 func(float32) float32
-	sdlFillSurfaceRect                       func(*Surface, *Rect, uint32) bool
+	sdlFillSurfaceRect func(*Surface, *Rect, uint32) bool
 	// sdlFillSurfaceRects                      func(*Surface, *Rect, int32, uint32) bool
 	sdlFilterEvents func(EventFilter, unsafe.Pointer)
 	// sdlFlashWindow                           func(*Window, FlashOperation) bool
@@ -541,7 +541,7 @@ var (
 	// sdlGetThreadID                           func(*Thread) ThreadID
 	// sdlGetThreadName                         func(*Thread) string
 	// sdlGetThreadState                        func(*Thread) ThreadState
-	sdlGetTicks uintptr
+	sdlGetTicks   uintptr
 	sdlGetTicksNS uintptr
 	// sdlGetTLS                                func(*TLSID) unsafe.Pointer
 	// sdlGetTouchDeviceName                    func(TouchID) string

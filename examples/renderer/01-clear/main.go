@@ -37,9 +37,9 @@ func main() {
 
 		now := float64(sdl.GetTicks()) / 1000.0
 		// choose the color for the frame we will draw. The sine wave trick makes it fade between colors smoothly.
-		red := 0.5 + 0.5 * float32(math.Sin(now))
-		green := 0.5 + 0.5 * float32(math.Sin(now + math.Pi * 2 / 3))
-		blue := 0.5 + 0.5 * float32(math.Sin(now + math.Pi * 4 / 3))
+		red := 0.5 + 0.5*float32(math.Sin(now))
+		green := 0.5 + 0.5*float32(math.Sin(now+math.Pi*2/3))
+		blue := 0.5 + 0.5*float32(math.Sin(now+math.Pi*4/3))
 
 		sdl.SetRenderDrawColorFloat(renderer, red, green, blue, 1)
 

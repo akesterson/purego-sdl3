@@ -69,8 +69,8 @@ func main() {
 				uint8(rand.Intn(256)),
 				sdl.AlphaOpaque)
 			sdl.RenderLine(renderer, x, y,
-				x + float32(math.Sin(float64(i))) * size,
-				y + float32(math.Cos(float64(i))) * size)
+				x+float32(math.Sin(float64(i)))*size,
+				y+float32(math.Cos(float64(i)))*size)
 		}
 
 		sdl.RenderPresent(renderer)

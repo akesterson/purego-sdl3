@@ -62,9 +62,9 @@ func main() {
 		now := float64(sdl.GetTicks()) / 1000
 
 		// choose the modulation values for the center texture. The sine wave trick makes it fade between colors smoothly.
-		red   := float32(0.5 + 0.5 * math.Sin(now))
-		green := float32(0.5 + 0.5 * math.Sin(now + math.Pi * 2 / 3))
-		blue  := float32(0.5 + 0.5 * math.Sin(now + math.Pi * 4 / 3))
+		red := float32(0.5 + 0.5*math.Sin(now))
+		green := float32(0.5 + 0.5*math.Sin(now+math.Pi*2/3))
+		blue := float32(0.5 + 0.5*math.Sin(now+math.Pi*4/3))
 
 		// as you can see from this, rendering draws over whatever was drawn before it.
 		sdl.SetRenderDrawColor(renderer, 0, 0, 0, sdl.AlphaOpaque)

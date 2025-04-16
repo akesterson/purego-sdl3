@@ -68,8 +68,8 @@ func main() {
 		sdl.RenderClear(renderer)
 
 		// Center this one, and draw it with some rotation so it spins!
-		dstRect.X = float32(WindowWidth - texture.W) / 2.0
-		dstRect.Y = float32(WindowHeight - texture.H) / 2.0
+		dstRect.X = float32(WindowWidth-texture.W) / 2.0
+		dstRect.Y = float32(WindowHeight-texture.H) / 2.0
 		dstRect.W = float32(texture.W)
 		dstRect.H = float32(texture.H)
 		// rotate it around the center of the texture; you can rotate it from a different point, too!

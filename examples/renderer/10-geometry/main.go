@@ -60,14 +60,14 @@ func main() {
 
 		// we'll have some textures move around over a few seconds.
 		var direction float32
-		if now % 2000 >= 1000 {
+		if now%2000 >= 1000 {
 			direction = 1
 		} else {
 			direction = -1
 		}
 
-		scale := (float32(int(now % 1000) - 500) / 500.0) * direction
-		size := 200.0 + 200.0 * scale
+		scale := (float32(int(now%1000)-500) / 500.0) * direction
+		size := 200.0 + 200.0*scale
 
 		var vertices [4]sdl.Vertex
 
@@ -78,15 +78,15 @@ func main() {
 		// Draw a single triangle with a different color at each vertex. Center this one and make it grow and shrink.
 		// You always draw triangles with this, but you can string triangles together to form polygons.
 		vertices[0].Position.X = float32(WindowWidth) / 2
-		vertices[0].Position.Y = float32(WindowHeight - size) / 2
+		vertices[0].Position.Y = float32(WindowHeight-size) / 2
 		vertices[0].Color.R = 1
 		vertices[0].Color.A = 1
-		vertices[1].Position.X = float32(WindowWidth + size) / 2
-		vertices[1].Position.Y = float32(WindowHeight + size) / 2
+		vertices[1].Position.X = float32(WindowWidth+size) / 2
+		vertices[1].Position.Y = float32(WindowHeight+size) / 2
 		vertices[1].Color.G = 1
 		vertices[1].Color.A = 1
-		vertices[2].Position.X = float32(WindowWidth - size) / 2
-		vertices[2].Position.Y = float32(WindowHeight + size) / 2
+		vertices[2].Position.X = float32(WindowWidth-size) / 2
+		vertices[2].Position.Y = float32(WindowHeight+size) / 2
 		vertices[2].Color.B = 1
 		vertices[2].Color.A = 1
 

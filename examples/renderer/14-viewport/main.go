@@ -84,7 +84,7 @@ func main() {
 
 		// bottom 20% of the window. Note it clips the width!
 		viewport.X = 0
-		viewport.Y = WindowHeight - WindowHeight / 5
+		viewport.Y = WindowHeight - WindowHeight/5
 		viewport.W = WindowWidth / 5
 		viewport.H = WindowHeight / 5
 		sdl.SetRenderViewport(renderer, &viewport)

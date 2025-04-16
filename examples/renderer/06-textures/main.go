@@ -61,13 +61,13 @@ func main() {
 
 		// we'll have some textures move around over a few seconds.
 		var direction float32
-		if now % 2000 >= 1000 {
+		if now%2000 >= 1000 {
 			direction = 1
 		} else {
 			direction = -1
 		}
 
-		scale := (float32(int(now % 1000) - 500) / 500) * direction
+		scale := (float32(int(now%1000)-500) / 500) * direction
 
 		// as you can see from this, rendering draws over whatever was drawn before it.
 		sdl.SetRenderDrawColor(renderer, 0, 0, 0, sdl.AlphaOpaque)
@@ -84,12 +84,12 @@ func main() {
 		sdl.RenderTexture(renderer, texture, nil, &dstRect)
 
 		// center this one.
-		dstRect.X = float32(WindowWidth - texture.W) / 2.0
-		dstRect.Y = float32(WindowHeight - texture.H) / 2.0
+		dstRect.X = float32(WindowWidth-texture.W) / 2.0
+		dstRect.Y = float32(WindowHeight-texture.H) / 2.0
 		sdl.RenderTexture(renderer, texture, nil, &dstRect)
 
 		// bottom right.
-		dstRect.X = float32(WindowWidth - texture.W) - 100.0 * scale
+		dstRect.X = float32(WindowWidth-texture.W) - 100.0*scale
 		dstRect.Y = float32(WindowHeight - texture.H)
 		sdl.RenderTexture(renderer, texture, nil, &dstRect)
 
