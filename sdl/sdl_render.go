@@ -388,7 +388,7 @@ func RenderDebugTextFormat(renderer *Renderer, x float32, y float32, format stri
 	return sdlRenderDebugTextFormat(renderer, x, y, fmt.Sprintf(format, a...))
 }
 
-func RenderFillRects(renderer *Renderer, rects ...FRect) bool {
+func RenderFillRects(renderer *Renderer, rects []FRect) bool {
 	count := len(rects)
 	var rectsPtr *FRect
 	if count > 0 {
@@ -405,7 +405,7 @@ func RenderGeometry(renderer *Renderer, texture *Texture, vertices []Vertex, ind
 		verticesPtr = &vertices[0]
 	}
 
-	numIndices := len(vertices)
+	numIndices := len(indices)
 	var indicesPtr *int32
 	if numIndices > 0 {
 		indicesPtr = &indices[0]
@@ -444,7 +444,7 @@ func RenderLine(renderer *Renderer, x1 float32, y1 float32, x2 float32, y2 float
 	return sdlRenderLine(renderer, x1, y1, x2, y2)
 }
 
-func RenderLines(renderer *Renderer, points ...FPoint) bool {
+func RenderLines(renderer *Renderer, points []FPoint) bool {
 	count := len(points)
 	var pointsPtr *FPoint
 	if count > 0 {
@@ -458,7 +458,7 @@ func RenderPoint(renderer *Renderer, x float32, y float32) bool {
 	return sdlRenderPoint(renderer, x, y)
 }
 
-func RenderPoints(renderer *Renderer, points ...FPoint) bool {
+func RenderPoints(renderer *Renderer, points []FPoint) bool {
 	count := len(points)
 	var pointsPtr *FPoint
 	if count > 0 {
@@ -472,7 +472,7 @@ func RenderReadPixels(renderer *Renderer, rect *Rect) *Surface {
 	return sdlRenderReadPixels(renderer, rect)
 }
 
-func RenderRects(renderer *Renderer, rects ...FRect) bool {
+func RenderRects(renderer *Renderer, rects []FRect) bool {
 	count := len(rects)
 	var rectsPtr *FRect
 	if count > 0 {

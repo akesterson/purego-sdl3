@@ -275,6 +275,16 @@ type Palette struct {
 	Refcount int32
 }
 
+type PixelFormatDetails struct {
+	Format                         PixelFormat
+	BitsPerPixel                   uint8
+	BytesPerPixel                  uint8
+	Padding                        [2]uint8
+	Rmask, Gmask, Bmask, Amask     uint32
+	Rbits, Gbits, Bbits, Abits     uint8
+	Rshift, Gshift, Bshift, Ashift uint8
+}
+
 func (p *Palette) Colors() []Color {
 	if p == nil || p.colors == nil {
 		return nil
@@ -302,9 +312,9 @@ func DestroyPalette(palette *Palette) {
 //	return sdlGetMasksForPixelFormat(format, bpp, Rmask, Gmask, Bmask, Amask)
 // }
 
-// func GetPixelFormatDetails(format PixelFormat) *PixelFormatDetails {
-//	return sdlGetPixelFormatDetails(format)
-// }
+func GetPixelFormatDetails(format PixelFormat) *PixelFormatDetails {
+	return sdlGetPixelFormatDetails(format)
+}
 
 // func GetPixelFormatForMasks(bpp int32, Rmask uint32, Gmask uint32, Bmask uint32, Amask uint32) PixelFormat {
 //	return sdlGetPixelFormatForMasks(bpp, Rmask, Gmask, Bmask, Amask)
@@ -322,9 +332,9 @@ func DestroyPalette(palette *Palette) {
 //	sdlGetRGBA(pixel, format, palette, r, g, b, a)
 // }
 
-// func MapRGB(format *PixelFormatDetails, palette *Palette, r uint8, g uint8, b uint8) uint32 {
-//	return sdlMapRGB(format, palette, r, g, b)
-// }
+func MapRGB(format *PixelFormatDetails, palette *Palette, r uint8, g uint8, b uint8) uint32 {
+	return sdlMapRGB(format, palette, r, g, b)
+}
 
 // func MapRGBA(format *PixelFormatDetails, palette *Palette, r uint8, g uint8, b uint8, a uint8) uint32 {
 //	return sdlMapRGBA(format, palette, r, g, b, a)

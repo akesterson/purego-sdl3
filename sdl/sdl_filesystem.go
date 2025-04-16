@@ -46,9 +46,10 @@ const (
 //	return sdlEnumerateDirectory(path, callback, userdata)
 // }
 
-// func GetBasePath() string {
-//	return sdlGetBasePath()
-// }
+// GetBasePath return the directory where the application was run from.
+func GetBasePath() string {
+	return sdlGetBasePath()
+}
 
 // func GetCurrentDirectory() string {
 //	return sdlGetCurrentDirectory()
