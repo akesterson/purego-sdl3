@@ -288,9 +288,10 @@ func GetWindowDisplayScale(window *Window) float32 {
 //	return sdlGetWindowICCProfile(window, size)
 // }
 
-// func GetWindowID(window *Window) WindowID {
-//	return sdlGetWindowID(window)
-// }
+// Get the numeric ID of a window.
+func GetWindowID(window *Window) WindowID {
+	return sdlGetWindowID(window)
+}
 
 // func GetWindowKeyboardGrab(window *Window) bool {
 //	return sdlGetWindowKeyboardGrab(window)
@@ -438,9 +439,10 @@ func HideWindow(window *Window) bool {
 //	return sdlMinimizeWindow(window)
 // }
 
-// func RaiseWindow(window *Window) bool {
-//	return sdlRaiseWindow(window)
-// }
+// Request that a window be raised above other windows and gain the input focus.
+func RaiseWindow(window *Window) bool {
+	return sdlRaiseWindow(window)
+}
 
 func RestoreWindow(window *Window) bool {
 	return sdlRestoreWindow(window)

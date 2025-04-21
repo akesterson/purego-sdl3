@@ -568,7 +568,7 @@ var (
 	// sdlGetWindowFromID                       func(WindowID) *Window
 	// sdlGetWindowFullscreenMode               func(*Window) *DisplayMode
 	// sdlGetWindowICCProfile                   func(*Window, *uint64) unsafe.Pointer
-	// sdlGetWindowID                           func(*Window) WindowID
+	sdlGetWindowID func(*Window) WindowID
 	// sdlGetWindowKeyboardGrab                 func(*Window) bool
 	// sdlGetWindowMaximumSize                  func(*Window, *int32, *int32) bool
 	// sdlGetWindowMinimumSize                  func(*Window, *int32, *int32) bool
@@ -815,7 +815,7 @@ var (
 	// sdlQueryGPUFence                         func(*GPUDevice, *GPUFence) bool
 	sdlQuit          func()
 	sdlQuitSubSystem func(InitFlags)
-	// sdlRaiseWindow                           func(*Window) bool
+	sdlRaiseWindow   func(*Window) bool
 	// sdlrand                                  func(int32) int32
 	// sdlrand_bits                             func() uint32
 	// sdlrand_bits_r                           func(*uint64) uint32
@@ -1794,7 +1794,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlGetWindowFromID, lib, "SDL_GetWindowFromID")
 	// purego.RegisterLibFunc(&sdlGetWindowFullscreenMode, lib, "SDL_GetWindowFullscreenMode")
 	// purego.RegisterLibFunc(&sdlGetWindowICCProfile, lib, "SDL_GetWindowICCProfile")
-	// purego.RegisterLibFunc(&sdlGetWindowID, lib, "SDL_GetWindowID")
+	purego.RegisterLibFunc(&sdlGetWindowID, lib, "SDL_GetWindowID")
 	// purego.RegisterLibFunc(&sdlGetWindowKeyboardGrab, lib, "SDL_GetWindowKeyboardGrab")
 	// purego.RegisterLibFunc(&sdlGetWindowMaximumSize, lib, "SDL_GetWindowMaximumSize")
 	// purego.RegisterLibFunc(&sdlGetWindowMinimumSize, lib, "SDL_GetWindowMinimumSize")
@@ -2041,7 +2041,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlQueryGPUFence, lib, "SDL_QueryGPUFence")
 	purego.RegisterLibFunc(&sdlQuit, lib, "SDL_Quit")
 	purego.RegisterLibFunc(&sdlQuitSubSystem, lib, "SDL_QuitSubSystem")
-	// purego.RegisterLibFunc(&sdlRaiseWindow, lib, "SDL_RaiseWindow")
+	purego.RegisterLibFunc(&sdlRaiseWindow, lib, "SDL_RaiseWindow")
 	// purego.RegisterLibFunc(&sdlrand, lib, "SDL_rand")
 	// purego.RegisterLibFunc(&sdlrand_bits, lib, "SDL_rand_bits")
 	// purego.RegisterLibFunc(&sdlrand_bits_r, lib, "SDL_rand_bits_r")
