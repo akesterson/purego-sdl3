@@ -350,17 +350,62 @@ const (
 	GPUPrimitiveTypePointlist
 )
 
+type GPUShaderFormat uint32
+
+const (
+	GPUShaderFormatInvalid  GPUShaderFormat = iota
+	GPUShaderFormatPrivate  GPUShaderFormat = 1 << 0
+	GPUShaderFormatSPIRV    GPUShaderFormat = 1 << 1
+	GPUShaderFormatDXBC     GPUShaderFormat = 1 << 2
+	GPUShaderFormatDXIL     GPUShaderFormat = 1 << 3
+	GPUShaderFormatMSL      GPUShaderFormat = 1 << 4
+	GPUShaderFormatMETALLIB GPUShaderFormat = 1 << 5
+)
+
 type GPUDevice struct{}
 
 type GPUTexture struct{}
 
-// func AcquireGPUCommandBuffer(device *GPUDevice) *GPUCommandBuffer {
-//	return sdlAcquireGPUCommandBuffer(device)
-// }
+type GPUCommandBuffer struct{}
 
-// func AcquireGPUSwapchainTexture(command_buffer *GPUCommandBuffer, window *Window, swapchain_texture **GPUTexture, swapchain_texture_width *uint32, swapchain_texture_height *uint32) bool {
-//	return sdlAcquireGPUSwapchainTexture(command_buffer, window, swapchain_texture, swapchain_texture_width, swapchain_texture_height)
-// }
+type GPURenderPass struct{}
+
+type GPUColorTargetInfo struct {
+	Texture             *GPUTexture
+	MipLevel            uint32
+	LayerOrDepthPlane   uint32
+	ClearColor          FColor
+	LoadOp              GPULoadOp
+	StoreOp             GPUStoreOp
+	ResolveTexture      *GPUTexture
+	ResolveMipLevel     uint32
+	ResolveLayer        uint32
+	Cycle               bool
+	CycleResolveTexture bool
+	Padding1            uint8
+	Padding2            uint8
+}
+
+type GPUDepthStencilTargetInfo struct {
+	Texture        *GPUTexture
+	ClearDepth     float32
+	LoadOp         GPULoadOp
+	StoreOp        GPUStoreOp
+	StencilLoadOp  GPULoadOp
+	StencilStoreOp GPUStoreOp
+	Cycle          bool
+	ClearStencil   uint8
+	Padding1       uint8
+	Padding2       uint8
+}
+
+func AcquireGPUCommandBuffer(device *GPUDevice) *GPUCommandBuffer {
+	return sdlAcquireGPUCommandBuffer(device)
+}
+
+func AcquireGPUSwapchainTexture(command_buffer *GPUCommandBuffer, window *Window, swapchain_texture **GPUTexture, swapchain_texture_width *uint32, swapchain_texture_height *uint32) bool {
+	return sdlAcquireGPUSwapchainTexture(command_buffer, window, swapchain_texture, swapchain_texture_width, swapchain_texture_height)
+}
 
 // func BeginGPUComputePass(command_buffer *GPUCommandBuffer, storage_texture_bindings *GPUStorageTextureReadWriteBinding, num_storage_texture_bindings uint32, storage_buffer_bindings *GPUStorageBufferReadWriteBinding, num_storage_buffer_bindings uint32) *GPUComputePass {
 //	return sdlBeginGPUComputePass(command_buffer, storage_texture_bindings, num_storage_texture_bindings, storage_buffer_bindings, num_storage_buffer_bindings)
@@ -370,9 +415,9 @@ type GPUTexture struct{}
 //	return sdlBeginGPUCopyPass(command_buffer)
 // }
 
-// func BeginGPURenderPass(command_buffer *GPUCommandBuffer, color_target_infos *GPUColorTargetInfo, num_color_targets uint32, depth_stencil_target_info *GPUDepthStencilTargetInfo) *GPURenderPass {
-//	return sdlBeginGPURenderPass(command_buffer, color_target_infos, num_color_targets, depth_stencil_target_info)
-// }
+func BeginGPURenderPass(command_buffer *GPUCommandBuffer, color_target_infos *GPUColorTargetInfo, num_color_targets uint32, depth_stencil_target_info *GPUDepthStencilTargetInfo) *GPURenderPass {
+	return sdlBeginGPURenderPass(command_buffer, color_target_infos, num_color_targets, depth_stencil_target_info)
+}
 
 // func BindGPUComputePipeline(compute_pass *GPUComputePass, compute_pipeline *GPUComputePipeline)  {
 //	sdlBindGPUComputePipeline(compute_pass, compute_pipeline)
@@ -438,9 +483,9 @@ type GPUTexture struct{}
 //	return sdlCancelGPUCommandBuffer(command_buffer)
 // }
 
-// func ClaimWindowForGPUDevice(device *GPUDevice, window *Window) bool {
-//	return sdlClaimWindowForGPUDevice(device, window)
-// }
+func ClaimWindowForGPUDevice(device *GPUDevice, window *Window) bool {
+	return sdlClaimWindowForGPUDevice(device, window)
+}
 
 // func CopyGPUBufferToBuffer(copy_pass *GPUCopyPass, source *GPUBufferLocation, destination *GPUBufferLocation, size uint32, cycle bool)  {
 //	sdlCopyGPUBufferToBuffer(copy_pass, source, destination, size, cycle)
@@ -458,9 +503,9 @@ type GPUTexture struct{}
 //	return sdlCreateGPUComputePipeline(device, createinfo)
 // }
 
-// func CreateGPUDevice(format_flags GPUShaderFormat, debug_mode bool, name string) *GPUDevice {
-//	return sdlCreateGPUDevice(format_flags, debug_mode, name)
-// }
+func CreateGPUDevice(format_flags GPUShaderFormat, debug_mode bool, name string) *GPUDevice {
+	return sdlCreateGPUDevice(format_flags, debug_mode, name)
+}
 
 // func CreateGPUDeviceWithProperties(props PropertiesID) *GPUDevice {
 //	return sdlCreateGPUDeviceWithProperties(props)
@@ -486,9 +531,9 @@ type GPUTexture struct{}
 //	return sdlCreateGPUTransferBuffer(device, createinfo)
 // }
 
-// func DestroyGPUDevice(device *GPUDevice)  {
-//	sdlDestroyGPUDevice(device)
-// }
+func DestroyGPUDevice(device *GPUDevice) {
+	sdlDestroyGPUDevice(device)
+}
 
 // func DispatchGPUCompute(compute_pass *GPUComputePass, groupcount_x uint32, groupcount_y uint32, groupcount_z uint32)  {
 //	sdlDispatchGPUCompute(compute_pass, groupcount_x, groupcount_y, groupcount_z)
@@ -530,9 +575,9 @@ type GPUTexture struct{}
 //	sdlEndGPUCopyPass(copy_pass)
 // }
 
-// func EndGPURenderPass(render_pass *GPURenderPass)  {
-//	sdlEndGPURenderPass(render_pass)
-// }
+func EndGPURenderPass(render_pass *GPURenderPass) {
+	sdlEndGPURenderPass(render_pass)
+}
 
 // func GenerateMipmapsForGPUTexture(command_buffer *GPUCommandBuffer, texture *GPUTexture)  {
 //	sdlGenerateMipmapsForGPUTexture(command_buffer, texture)
@@ -542,9 +587,9 @@ type GPUTexture struct{}
 //	return sdlGetGPUDeviceDriver(device)
 // }
 
-// func GetGPUDriver(index int32) string {
-//	return sdlGetGPUDriver(index)
-// }
+func GetGPUDriver(index int32) string {
+	return sdlGetGPUDriver(index)
+}
 
 // func GetGPUShaderFormats(device *GPUDevice) GPUShaderFormat {
 //	return sdlGetGPUShaderFormats(device)
@@ -642,9 +687,9 @@ type GPUTexture struct{}
 //	sdlReleaseGPUTransferBuffer(device, transfer_buffer)
 // }
 
-// func ReleaseWindowFromGPUDevice(device *GPUDevice, window *Window)  {
-//	sdlReleaseWindowFromGPUDevice(device, window)
-// }
+func ReleaseWindowFromGPUDevice(device *GPUDevice, window *Window) {
+	sdlReleaseWindowFromGPUDevice(device, window)
+}
 
 // func SetGPUAllowedFramesInFlight(device *GPUDevice, allowed_frames_in_flight uint32) bool {
 //	return sdlSetGPUAllowedFramesInFlight(device, allowed_frames_in_flight)
@@ -666,9 +711,9 @@ type GPUTexture struct{}
 //	sdlSetGPUStencilReference(render_pass, reference)
 // }
 
-// func SetGPUSwapchainParameters(device *GPUDevice, window *Window, swapchain_composition GPUSwapchainComposition, present_mode GPUPresentMode) bool {
-//	return sdlSetGPUSwapchainParameters(device, window, swapchain_composition, present_mode)
-// }
+func SetGPUSwapchainParameters(device *GPUDevice, window *Window, swapchain_composition GPUSwapchainComposition, present_mode GPUPresentMode) bool {
+	return sdlSetGPUSwapchainParameters(device, window, swapchain_composition, present_mode)
+}
 
 // func SetGPUTextureName(device *GPUDevice, texture *GPUTexture, text string)  {
 //	sdlSetGPUTextureName(device, texture, text)
@@ -678,9 +723,9 @@ type GPUTexture struct{}
 //	sdlSetGPUViewport(render_pass, viewport)
 // }
 
-// func SubmitGPUCommandBuffer(command_buffer *GPUCommandBuffer) bool {
-//	return sdlSubmitGPUCommandBuffer(command_buffer)
-// }
+func SubmitGPUCommandBuffer(command_buffer *GPUCommandBuffer) bool {
+	return sdlSubmitGPUCommandBuffer(command_buffer)
+}
 
 // func SubmitGPUCommandBufferAndAcquireFence(command_buffer *GPUCommandBuffer) *GPUFence {
 //	return sdlSubmitGPUCommandBufferAndAcquireFence(command_buffer)
@@ -698,9 +743,9 @@ type GPUTexture struct{}
 //	sdlUploadToGPUTexture(copy_pass, source, destination, cycle)
 // }
 
-// func WaitAndAcquireGPUSwapchainTexture(command_buffer *GPUCommandBuffer, window *Window, swapchain_texture **GPUTexture, swapchain_texture_width *uint32, swapchain_texture_height *uint32) bool {
-//	return sdlWaitAndAcquireGPUSwapchainTexture(command_buffer, window, swapchain_texture, swapchain_texture_width, swapchain_texture_height)
-// }
+func WaitAndAcquireGPUSwapchainTexture(command_buffer *GPUCommandBuffer, window *Window, swapchain_texture **GPUTexture, swapchain_texture_width *uint32, swapchain_texture_height *uint32) bool {
+	return sdlWaitAndAcquireGPUSwapchainTexture(command_buffer, window, swapchain_texture, swapchain_texture_width, swapchain_texture_height)
+}
 
 // func WaitForGPUFences(device *GPUDevice, wait_all bool, fences **GPUFence, num_fences uint32) bool {
 //	return sdlWaitForGPUFences(device, wait_all, fences, num_fences)
@@ -714,9 +759,9 @@ type GPUTexture struct{}
 //	return sdlWaitForGPUSwapchain(device, window)
 // }
 
-// func WindowSupportsGPUPresentMode(device *GPUDevice, window *Window, present_mode GPUPresentMode) bool {
-//	return sdlWindowSupportsGPUPresentMode(device, window, present_mode)
-// }
+func WindowSupportsGPUPresentMode(device *GPUDevice, window *Window, present_mode GPUPresentMode) bool {
+	return sdlWindowSupportsGPUPresentMode(device, window, present_mode)
+}
 
 // func WindowSupportsGPUSwapchainComposition(device *GPUDevice, window *Window, swapchain_composition GPUSwapchainComposition) bool {
 //	return sdlWindowSupportsGPUSwapchainComposition(device, window, swapchain_composition)

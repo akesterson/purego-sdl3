@@ -12,9 +12,9 @@ var (
 	// sdlabs                                   func(int32) int32
 	// sdlacos                                  func(float64) float64
 	// sdlacosf                                 func(float32) float32
-	sdlAcquireCameraFrame func(*Camera, *uint64) *Surface
-	// sdlAcquireGPUCommandBuffer               func(*GPUDevice) *GPUCommandBuffer
-	// sdlAcquireGPUSwapchainTexture            func(*GPUCommandBuffer, *Window, **GPUTexture, *uint32, *uint32) bool
+	sdlAcquireCameraFrame         func(*Camera, *uint64) *Surface
+	sdlAcquireGPUCommandBuffer    func(*GPUDevice) *GPUCommandBuffer
+	sdlAcquireGPUSwapchainTexture func(*GPUCommandBuffer, *Window, **GPUTexture, *uint32, *uint32) bool
 	// sdlAddAtomicInt                          func(*AtomicInt, int32) int32
 	sdlAddEventWatch func(EventFilter, unsafe.Pointer) bool
 	// sdlAddGamepadMapping                     func(string) int32
@@ -42,7 +42,7 @@ var (
 	// sdlAudioStreamDevicePaused               func(*AudioStream) bool
 	// sdlBeginGPUComputePass                   func(*GPUCommandBuffer, *GPUStorageTextureReadWriteBinding, uint32, *GPUStorageBufferReadWriteBinding, uint32) *GPUComputePass
 	// sdlBeginGPUCopyPass                      func(*GPUCommandBuffer) *GPUCopyPass
-	// sdlBeginGPURenderPass                    func(*GPUCommandBuffer, *GPUColorTargetInfo, uint32, *GPUDepthStencilTargetInfo) *GPURenderPass
+	sdlBeginGPURenderPass func(*GPUCommandBuffer, *GPUColorTargetInfo, uint32, *GPUDepthStencilTargetInfo) *GPURenderPass
 	// sdlBindAudioStream                       func(AudioDeviceID, *AudioStream) bool
 	// sdlBindAudioStreams                      func(AudioDeviceID, **AudioStream, int32) bool
 	// sdlBindGPUComputePipeline                func(*GPUComputePass, *GPUComputePipeline)
@@ -75,7 +75,7 @@ var (
 	sdlCaptureMouse func(bool) bool
 	// sdlceil                                  func(float64) float64
 	// sdlceilf                                 func(float32) float32
-	// sdlClaimWindowForGPUDevice               func(*GPUDevice, *Window) bool
+	sdlClaimWindowForGPUDevice func(*GPUDevice, *Window) bool
 	// sdlCleanupTLS                            func()
 	// sdlClearAudioStream                      func(*AudioStream) bool
 	// sdlClearClipboardData                    func() bool
@@ -123,7 +123,7 @@ var (
 	// sdlCreateEnvironment                     func(bool) *Environment
 	// sdlCreateGPUBuffer                       func(*GPUDevice, *GPUBufferCreateInfo) *GPUBuffer
 	// sdlCreateGPUComputePipeline              func(*GPUDevice, *GPUComputePipelineCreateInfo) *GPUComputePipeline
-	// sdlCreateGPUDevice                       func(GPUShaderFormat, bool, string) *GPUDevice
+	sdlCreateGPUDevice func(GPUShaderFormat, bool, string) *GPUDevice
 	// sdlCreateGPUDeviceWithProperties         func(PropertiesID) *GPUDevice
 	// sdlCreateGPUGraphicsPipeline             func(*GPUDevice, *GPUGraphicsPipelineCreateInfo) *GPUGraphicsPipeline
 	// sdlCreateGPUSampler                      func(*GPUDevice, *GPUSamplerCreateInfo) *GPUSampler
@@ -168,7 +168,7 @@ var (
 	// sdlDestroyCondition                      func(*Condition)
 	sdlDestroyCursor func(*Cursor)
 	// sdlDestroyEnvironment                    func(*Environment)
-	// sdlDestroyGPUDevice                      func(*GPUDevice)
+	sdlDestroyGPUDevice func(*GPUDevice)
 	// sdlDestroyHapticEffect                   func(*Haptic, int32)
 	// sdlDestroyMutex                          func(*Mutex)
 	sdlDestroyPalette func(*Palette)
@@ -202,7 +202,7 @@ var (
 	// sdlEnableScreenSaver                     func() bool
 	// sdlEndGPUComputePass                     func(*GPUComputePass)
 	// sdlEndGPUCopyPass                        func(*GPUCopyPass)
-	// sdlEndGPURenderPass                      func(*GPURenderPass)
+	sdlEndGPURenderPass func(*GPURenderPass)
 	// sdlEnterAppMainCallbacks                 func(int32, **byte, AppInit_func, AppIterate_func, AppEvent_func, AppQuit_func) int32
 	// sdlEnumerateDirectory                    func(string, EnumerateDirectoryCallback, unsafe.Pointer) bool
 	sdlEnumerateProperties func(PropertiesID, EnumeratePropertiesCallback, unsafe.Pointer) bool
@@ -362,7 +362,7 @@ var (
 	sdlGetGlobalMouseState func(*float32, *float32) MouseButtonFlags
 	sdlGetGlobalProperties func() PropertiesID
 	// sdlGetGPUDeviceDriver                    func(*GPUDevice) string
-	// sdlGetGPUDriver                          func(int32) string
+	sdlGetGPUDriver func(int32) string
 	// sdlGetGPUShaderFormats                   func(*GPUDevice) GPUShaderFormat
 	// sdlGetGPUSwapchainTextureFormat          func(*GPUDevice, *Window) GPUTextureFormat
 	// sdlGetGrabbedWindow                      func() *Window
@@ -853,7 +853,7 @@ var (
 	// sdlReleaseGPUShader                      func(*GPUDevice, *GPUShader)
 	// sdlReleaseGPUTexture                     func(*GPUDevice, *GPUTexture)
 	// sdlReleaseGPUTransferBuffer              func(*GPUDevice, *GPUTransferBuffer)
-	// sdlReleaseWindowFromGPUDevice            func(*GPUDevice, *Window)
+	sdlReleaseWindowFromGPUDevice func(*GPUDevice, *Window)
 	// sdlReloadGamepadMappings                 func() bool
 	sdlRemoveEventWatch   func(EventFilter, unsafe.Pointer)
 	sdlRemoveHintCallback func(string, HintCallback, unsafe.Pointer)
@@ -957,7 +957,7 @@ var (
 	// sdlSetGPUBufferName                      func(*GPUDevice, *GPUBuffer, string)
 	// sdlSetGPUScissor                         func(*GPURenderPass, *Rect)
 	// sdlSetGPUStencilReference                func(*GPURenderPass, uint8)
-	// sdlSetGPUSwapchainParameters             func(*GPUDevice, *Window, GPUSwapchainComposition, GPUPresentMode) bool
+	sdlSetGPUSwapchainParameters func(*GPUDevice, *Window, GPUSwapchainComposition, GPUPresentMode) bool
 	// sdlSetGPUTextureName                     func(*GPUDevice, *GPUTexture, string)
 	// sdlSetGPUViewport                        func(*GPURenderPass, *GPUViewport)
 	// sdlSetHapticAutocenter                   func(*Haptic, int32) bool
@@ -1105,7 +1105,7 @@ var (
 	// sdlstrtoul                               func(string, **byte, int32) uint64
 	// sdlstrtoull                              func(string, **byte, int32) uint64
 	// sdlstrupr                                func(string) string
-	// sdlSubmitGPUCommandBuffer                func(*GPUCommandBuffer) bool
+	sdlSubmitGPUCommandBuffer func(*GPUCommandBuffer) bool
 	// sdlSubmitGPUCommandBufferAndAcquireFence func(*GPUCommandBuffer) *GPUFence
 	sdlSurfaceHasAlternateImages func(*Surface) bool
 	sdlSurfaceHasColorKey        func(*Surface) bool
@@ -1165,7 +1165,7 @@ var (
 	// sdlvsnprintf                             func(string, uint64, string, va_list) int32
 	// sdlvsscanf                               func(string, string, va_list) int32
 	// sdlvswprintf                             func(*wchar_t, uint64, *wchar_t, va_list) int32
-	// sdlWaitAndAcquireGPUSwapchainTexture     func(*GPUCommandBuffer, *Window, **GPUTexture, *uint32, *uint32) bool
+	sdlWaitAndAcquireGPUSwapchainTexture func(*GPUCommandBuffer, *Window, **GPUTexture, *uint32, *uint32) bool
 	// sdlWaitAsyncIOResult                     func(*AsyncIOQueue, *AsyncIOOutcome, int32) bool
 	// sdlWaitCondition                         func(*Condition, *Mutex)
 	// sdlWaitConditionTimeout                  func(*Condition, *Mutex, int32) bool
@@ -1194,7 +1194,7 @@ var (
 	// sdlwcsstr                                func(*wchar_t, *wchar_t) *wchar_t
 	// sdlwcstol                                func(*wchar_t, **wchar_t, int32) int64
 	// sdlWindowHasSurface                      func(*Window) bool
-	// sdlWindowSupportsGPUPresentMode          func(*GPUDevice, *Window, GPUPresentMode) bool
+	sdlWindowSupportsGPUPresentMode func(*GPUDevice, *Window, GPUPresentMode) bool
 	// sdlWindowSupportsGPUSwapchainComposition func(*GPUDevice, *Window, GPUSwapchainComposition) bool
 	// sdlWriteAsyncIO                          func(*AsyncIO, unsafe.Pointer, uint64, uint64, *AsyncIOQueue, unsafe.Pointer) bool
 	// sdlWriteIO                               func(*IOStream, unsafe.Pointer, uint64) uint64
@@ -1238,9 +1238,9 @@ func init() {
 	// purego.RegisterLibFunc(&sdlabs, lib, "SDL_abs")
 	// purego.RegisterLibFunc(&sdlacos, lib, "SDL_acos")
 	// purego.RegisterLibFunc(&sdlacosf, lib, "SDL_acosf")
-	purego.RegisterLibFunc(&sdlAcquireCameraFrame, lib, "SDL_AcquireCameraFrame")
-	// purego.RegisterLibFunc(&sdlAcquireGPUCommandBuffer, lib, "SDL_AcquireGPUCommandBuffer")
-	// purego.RegisterLibFunc(&sdlAcquireGPUSwapchainTexture, lib, "SDL_AcquireGPUSwapchainTexture")
+	// purego.RegisterLibFunc(&sdlAcquireCameraFrame, lib, "SDL_AcquireCameraFrame")
+	purego.RegisterLibFunc(&sdlAcquireGPUCommandBuffer, lib, "SDL_AcquireGPUCommandBuffer")
+	purego.RegisterLibFunc(&sdlAcquireGPUSwapchainTexture, lib, "SDL_AcquireGPUSwapchainTexture")
 	// purego.RegisterLibFunc(&sdlAddAtomicInt, lib, "SDL_AddAtomicInt")
 	purego.RegisterLibFunc(&sdlAddEventWatch, lib, "SDL_AddEventWatch")
 	// purego.RegisterLibFunc(&sdlAddGamepadMapping, lib, "SDL_AddGamepadMapping")
@@ -1268,7 +1268,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlAudioStreamDevicePaused, lib, "SDL_AudioStreamDevicePaused")
 	// purego.RegisterLibFunc(&sdlBeginGPUComputePass, lib, "SDL_BeginGPUComputePass")
 	// purego.RegisterLibFunc(&sdlBeginGPUCopyPass, lib, "SDL_BeginGPUCopyPass")
-	// purego.RegisterLibFunc(&sdlBeginGPURenderPass, lib, "SDL_BeginGPURenderPass")
+	purego.RegisterLibFunc(&sdlBeginGPURenderPass, lib, "SDL_BeginGPURenderPass")
 	// purego.RegisterLibFunc(&sdlBindAudioStream, lib, "SDL_BindAudioStream")
 	// purego.RegisterLibFunc(&sdlBindAudioStreams, lib, "SDL_BindAudioStreams")
 	// purego.RegisterLibFunc(&sdlBindGPUComputePipeline, lib, "SDL_BindGPUComputePipeline")
@@ -1301,7 +1301,7 @@ func init() {
 	purego.RegisterLibFunc(&sdlCaptureMouse, lib, "SDL_CaptureMouse")
 	// purego.RegisterLibFunc(&sdlceil, lib, "SDL_ceil")
 	// purego.RegisterLibFunc(&sdlceilf, lib, "SDL_ceilf")
-	// purego.RegisterLibFunc(&sdlClaimWindowForGPUDevice, lib, "SDL_ClaimWindowForGPUDevice")
+	purego.RegisterLibFunc(&sdlClaimWindowForGPUDevice, lib, "SDL_ClaimWindowForGPUDevice")
 	// purego.RegisterLibFunc(&sdlCleanupTLS, lib, "SDL_CleanupTLS")
 	// purego.RegisterLibFunc(&sdlClearAudioStream, lib, "SDL_ClearAudioStream")
 	// purego.RegisterLibFunc(&sdlClearClipboardData, lib, "SDL_ClearClipboardData")
@@ -1349,7 +1349,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlCreateEnvironment, lib, "SDL_CreateEnvironment")
 	// purego.RegisterLibFunc(&sdlCreateGPUBuffer, lib, "SDL_CreateGPUBuffer")
 	// purego.RegisterLibFunc(&sdlCreateGPUComputePipeline, lib, "SDL_CreateGPUComputePipeline")
-	// purego.RegisterLibFunc(&sdlCreateGPUDevice, lib, "SDL_CreateGPUDevice")
+	purego.RegisterLibFunc(&sdlCreateGPUDevice, lib, "SDL_CreateGPUDevice")
 	// purego.RegisterLibFunc(&sdlCreateGPUDeviceWithProperties, lib, "SDL_CreateGPUDeviceWithProperties")
 	// purego.RegisterLibFunc(&sdlCreateGPUGraphicsPipeline, lib, "SDL_CreateGPUGraphicsPipeline")
 	// purego.RegisterLibFunc(&sdlCreateGPUSampler, lib, "SDL_CreateGPUSampler")
@@ -1394,7 +1394,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlDestroyCondition, lib, "SDL_DestroyCondition")
 	purego.RegisterLibFunc(&sdlDestroyCursor, lib, "SDL_DestroyCursor")
 	// purego.RegisterLibFunc(&sdlDestroyEnvironment, lib, "SDL_DestroyEnvironment")
-	// purego.RegisterLibFunc(&sdlDestroyGPUDevice, lib, "SDL_DestroyGPUDevice")
+	purego.RegisterLibFunc(&sdlDestroyGPUDevice, lib, "SDL_DestroyGPUDevice")
 	// purego.RegisterLibFunc(&sdlDestroyHapticEffect, lib, "SDL_DestroyHapticEffect")
 	// purego.RegisterLibFunc(&sdlDestroyMutex, lib, "SDL_DestroyMutex")
 	purego.RegisterLibFunc(&sdlDestroyPalette, lib, "SDL_DestroyPalette")
@@ -1428,7 +1428,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlEnableScreenSaver, lib, "SDL_EnableScreenSaver")
 	// purego.RegisterLibFunc(&sdlEndGPUComputePass, lib, "SDL_EndGPUComputePass")
 	// purego.RegisterLibFunc(&sdlEndGPUCopyPass, lib, "SDL_EndGPUCopyPass")
-	// purego.RegisterLibFunc(&sdlEndGPURenderPass, lib, "SDL_EndGPURenderPass")
+	purego.RegisterLibFunc(&sdlEndGPURenderPass, lib, "SDL_EndGPURenderPass")
 	// purego.RegisterLibFunc(&sdlEnterAppMainCallbacks, lib, "SDL_EnterAppMainCallbacks")
 	// purego.RegisterLibFunc(&sdlEnumerateDirectory, lib, "SDL_EnumerateDirectory")
 	purego.RegisterLibFunc(&sdlEnumerateProperties, lib, "SDL_EnumerateProperties")
@@ -1588,7 +1588,7 @@ func init() {
 	purego.RegisterLibFunc(&sdlGetGlobalMouseState, lib, "SDL_GetGlobalMouseState")
 	purego.RegisterLibFunc(&sdlGetGlobalProperties, lib, "SDL_GetGlobalProperties")
 	// purego.RegisterLibFunc(&sdlGetGPUDeviceDriver, lib, "SDL_GetGPUDeviceDriver")
-	// purego.RegisterLibFunc(&sdlGetGPUDriver, lib, "SDL_GetGPUDriver")
+	purego.RegisterLibFunc(&sdlGetGPUDriver, lib, "SDL_GetGPUDriver")
 	// purego.RegisterLibFunc(&sdlGetGPUShaderFormats, lib, "SDL_GetGPUShaderFormats")
 	// purego.RegisterLibFunc(&sdlGetGPUSwapchainTextureFormat, lib, "SDL_GetGPUSwapchainTextureFormat")
 	// purego.RegisterLibFunc(&sdlGetGrabbedWindow, lib, "SDL_GetGrabbedWindow")
@@ -2079,7 +2079,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlReleaseGPUShader, lib, "SDL_ReleaseGPUShader")
 	// purego.RegisterLibFunc(&sdlReleaseGPUTexture, lib, "SDL_ReleaseGPUTexture")
 	// purego.RegisterLibFunc(&sdlReleaseGPUTransferBuffer, lib, "SDL_ReleaseGPUTransferBuffer")
-	// purego.RegisterLibFunc(&sdlReleaseWindowFromGPUDevice, lib, "SDL_ReleaseWindowFromGPUDevice")
+	purego.RegisterLibFunc(&sdlReleaseWindowFromGPUDevice, lib, "SDL_ReleaseWindowFromGPUDevice")
 	// purego.RegisterLibFunc(&sdlReloadGamepadMappings, lib, "SDL_ReloadGamepadMappings")
 	purego.RegisterLibFunc(&sdlRemoveEventWatch, lib, "SDL_RemoveEventWatch")
 	purego.RegisterLibFunc(&sdlRemoveHintCallback, lib, "SDL_RemoveHintCallback")
@@ -2183,7 +2183,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlSetGPUBufferName, lib, "SDL_SetGPUBufferName")
 	// purego.RegisterLibFunc(&sdlSetGPUScissor, lib, "SDL_SetGPUScissor")
 	// purego.RegisterLibFunc(&sdlSetGPUStencilReference, lib, "SDL_SetGPUStencilReference")
-	// purego.RegisterLibFunc(&sdlSetGPUSwapchainParameters, lib, "SDL_SetGPUSwapchainParameters")
+	purego.RegisterLibFunc(&sdlSetGPUSwapchainParameters, lib, "SDL_SetGPUSwapchainParameters")
 	// purego.RegisterLibFunc(&sdlSetGPUTextureName, lib, "SDL_SetGPUTextureName")
 	// purego.RegisterLibFunc(&sdlSetGPUViewport, lib, "SDL_SetGPUViewport")
 	// purego.RegisterLibFunc(&sdlSetHapticAutocenter, lib, "SDL_SetHapticAutocenter")
@@ -2331,7 +2331,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlstrtoul, lib, "SDL_strtoul")
 	// purego.RegisterLibFunc(&sdlstrtoull, lib, "SDL_strtoull")
 	// purego.RegisterLibFunc(&sdlstrupr, lib, "SDL_strupr")
-	// purego.RegisterLibFunc(&sdlSubmitGPUCommandBuffer, lib, "SDL_SubmitGPUCommandBuffer")
+	purego.RegisterLibFunc(&sdlSubmitGPUCommandBuffer, lib, "SDL_SubmitGPUCommandBuffer")
 	// purego.RegisterLibFunc(&sdlSubmitGPUCommandBufferAndAcquireFence, lib, "SDL_SubmitGPUCommandBufferAndAcquireFence")
 	purego.RegisterLibFunc(&sdlSurfaceHasAlternateImages, lib, "SDL_SurfaceHasAlternateImages")
 	purego.RegisterLibFunc(&sdlSurfaceHasColorKey, lib, "SDL_SurfaceHasColorKey")
@@ -2391,7 +2391,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlvsnprintf, lib, "SDL_vsnprintf")
 	// purego.RegisterLibFunc(&sdlvsscanf, lib, "SDL_vsscanf")
 	// purego.RegisterLibFunc(&sdlvswprintf, lib, "SDL_vswprintf")
-	// purego.RegisterLibFunc(&sdlWaitAndAcquireGPUSwapchainTexture, lib, "SDL_WaitAndAcquireGPUSwapchainTexture")
+	purego.RegisterLibFunc(&sdlWaitAndAcquireGPUSwapchainTexture, lib, "SDL_WaitAndAcquireGPUSwapchainTexture")
 	// purego.RegisterLibFunc(&sdlWaitAsyncIOResult, lib, "SDL_WaitAsyncIOResult")
 	// purego.RegisterLibFunc(&sdlWaitCondition, lib, "SDL_WaitCondition")
 	// purego.RegisterLibFunc(&sdlWaitConditionTimeout, lib, "SDL_WaitConditionTimeout")
@@ -2420,7 +2420,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlwcsstr, lib, "SDL_wcsstr")
 	// purego.RegisterLibFunc(&sdlwcstol, lib, "SDL_wcstol")
 	// purego.RegisterLibFunc(&sdlWindowHasSurface, lib, "SDL_WindowHasSurface")
-	// purego.RegisterLibFunc(&sdlWindowSupportsGPUPresentMode, lib, "SDL_WindowSupportsGPUPresentMode")
+	purego.RegisterLibFunc(&sdlWindowSupportsGPUPresentMode, lib, "SDL_WindowSupportsGPUPresentMode")
 	// purego.RegisterLibFunc(&sdlWindowSupportsGPUSwapchainComposition, lib, "SDL_WindowSupportsGPUSwapchainComposition")
 	// purego.RegisterLibFunc(&sdlWriteAsyncIO, lib, "SDL_WriteAsyncIO")
 	// purego.RegisterLibFunc(&sdlWriteIO, lib, "SDL_WriteIO")
