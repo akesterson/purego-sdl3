@@ -751,7 +751,7 @@ var (
 	// sdlMapGPUTransferBuffer                  func(*GPUDevice, *GPUTransferBuffer, bool) unsafe.Pointer
 	sdlMapRGB func(*PixelFormatDetails, *Palette, uint8, uint8, uint8) uint32
 	// sdlMapRGBA                               func(*PixelFormatDetails, *Palette, uint8, uint8, uint8, uint8) uint32
-	// sdlMapSurfaceRGB                         func(*Surface, uint8, uint8, uint8) uint32
+	sdlMapSurfaceRGB func(*Surface, uint8, uint8, uint8) uint32
 	// sdlMapSurfaceRGBA                        func(*Surface, uint8, uint8, uint8, uint8) uint32
 	// sdlMaximizeWindow                        func(*Window) bool
 	// sdlmemcmp                                func(unsafe.Pointer, unsafe.Pointer, uint64) int32
@@ -1977,7 +1977,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlMapGPUTransferBuffer, lib, "SDL_MapGPUTransferBuffer")
 	purego.RegisterLibFunc(&sdlMapRGB, lib, "SDL_MapRGB")
 	// purego.RegisterLibFunc(&sdlMapRGBA, lib, "SDL_MapRGBA")
-	// purego.RegisterLibFunc(&sdlMapSurfaceRGB, lib, "SDL_MapSurfaceRGB")
+	purego.RegisterLibFunc(&sdlMapSurfaceRGB, lib, "SDL_MapSurfaceRGB")
 	// purego.RegisterLibFunc(&sdlMapSurfaceRGBA, lib, "SDL_MapSurfaceRGBA")
 	// purego.RegisterLibFunc(&sdlMaximizeWindow, lib, "SDL_MaximizeWindow")
 	// purego.RegisterLibFunc(&sdlmemcmp, lib, "SDL_memcmp")
