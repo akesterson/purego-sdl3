@@ -197,9 +197,9 @@ func LockSurface(surface *Surface) bool {
 	return sdlLockSurface(surface)
 }
 
-// func MapSurfaceRGB(surface *Surface, r uint8, g uint8, b uint8) uint32 {
-//	return sdlMapSurfaceRGB(surface, r, g, b)
-// }
+func MapSurfaceRGB(surface *Surface, r uint8, g uint8, b uint8) uint32 {
+	return sdlMapSurfaceRGB(surface, r, g, b)
+}
 
 // func MapSurfaceRGBA(surface *Surface, r uint8, g uint8, b uint8, a uint8) uint32 {
 //	return sdlMapSurfaceRGBA(surface, r, g, b, a)
