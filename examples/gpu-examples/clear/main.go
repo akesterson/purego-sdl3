@@ -55,7 +55,7 @@ Outer:
 			colorTargetInfo.LoadOp = sdl.GPULoadOpClear
 			colorTargetInfo.StoreOp = sdl.GPUStoreOpStore
 
-			renderPass := sdl.BeginGPURenderPass(commandBuffer, &colorTargetInfo, 1, nil)
+			renderPass := sdl.BeginGPURenderPass(commandBuffer, []sdl.GPUColorTargetInfo{colorTargetInfo}, nil)
 			sdl.EndGPURenderPass(renderPass)
 		}
 

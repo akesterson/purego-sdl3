@@ -123,7 +123,7 @@ var (
 	// sdlCreateEnvironment                     func(bool) *Environment
 	// sdlCreateGPUBuffer                       func(*GPUDevice, *GPUBufferCreateInfo) *GPUBuffer
 	// sdlCreateGPUComputePipeline              func(*GPUDevice, *GPUComputePipelineCreateInfo) *GPUComputePipeline
-	sdlCreateGPUDevice func(GPUShaderFormat, bool, string) *GPUDevice
+	sdlCreateGPUDevice func(GPUShaderFormat, bool, *byte) *GPUDevice
 	// sdlCreateGPUDeviceWithProperties         func(PropertiesID) *GPUDevice
 	// sdlCreateGPUGraphicsPipeline             func(*GPUDevice, *GPUGraphicsPipelineCreateInfo) *GPUGraphicsPipeline
 	// sdlCreateGPUSampler                      func(*GPUDevice, *GPUSamplerCreateInfo) *GPUSampler
