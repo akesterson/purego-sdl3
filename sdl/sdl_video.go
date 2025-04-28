@@ -476,12 +476,12 @@ func RestoreWindow(window *Window) bool {
 //	return sdlSetWindowFullscreenMode(window, mode)
 // }
 
-func SetWindowHitTest(window *Window, callback HitTest, callback_data unsafe.Pointer) bool {
+func SetWindowHitTest(window *Window, callback HitTest, callbackData unsafe.Pointer) bool {
 	wrapper := func(win *Window, point *Point, data unsafe.Pointer) uintptr {
 		return uintptr(callback(win, point, data))
 	}
 
-	return sdlSetWindowHitTest(window, wrapper, callback_data)
+	return sdlSetWindowHitTest(window, wrapper, callbackData)
 }
 
 func SetWindowIcon(window *Window, icon *Surface) bool {
