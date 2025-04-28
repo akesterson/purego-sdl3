@@ -51,7 +51,7 @@ Outer:
 		if swapchainTexture != nil {
 			colorTargetInfo := sdl.GPUColorTargetInfo{}
 			colorTargetInfo.Texture = swapchainTexture
-			colorTargetInfo.ClearColor = sdl.FColor{0.5, 0.1, 0.3, 1}
+			colorTargetInfo.ClearColor = sdl.FColor{R: 0.5, G: 0.1, B: 0.3, A: 1}
 			colorTargetInfo.LoadOp = sdl.GPULoadOpClear
 			colorTargetInfo.StoreOp = sdl.GPUStoreOpStore
 
