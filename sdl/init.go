@@ -161,7 +161,7 @@ var (
 	sdlCursorVisible func() bool
 	// sdlDateTimeToTime                        func(*DateTime, *Time) bool
 	// sdlDelay                                 func(uint32)
-	// sdlDelayNS                               func(uint64)
+	sdlDelayNS func(uint64)
 	// sdlDelayPrecise                          func(uint64)
 	// sdlDestroyAsyncIOQueue                   func(*AsyncIOQueue)
 	// sdlDestroyAudioStream                    func(*AudioStream)
@@ -1387,7 +1387,7 @@ func init() {
 	purego.RegisterLibFunc(&sdlCursorVisible, lib, "SDL_CursorVisible")
 	// purego.RegisterLibFunc(&sdlDateTimeToTime, lib, "SDL_DateTimeToTime")
 	// purego.RegisterLibFunc(&sdlDelay, lib, "SDL_Delay")
-	// purego.RegisterLibFunc(&sdlDelayNS, lib, "SDL_DelayNS")
+	purego.RegisterLibFunc(&sdlDelayNS, lib, "SDL_DelayNS")
 	// purego.RegisterLibFunc(&sdlDelayPrecise, lib, "SDL_DelayPrecise")
 	// purego.RegisterLibFunc(&sdlDestroyAsyncIOQueue, lib, "SDL_DestroyAsyncIOQueue")
 	// purego.RegisterLibFunc(&sdlDestroyAudioStream, lib, "SDL_DestroyAudioStream")
