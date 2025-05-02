@@ -15,7 +15,7 @@ import "github.com/ebitengine/purego"
 //	sdlDelay(ms)
 // }
 
-// DelayNS wait a specified number of nanoseconds before returning.
+// DelayNS waits a specified number of nanoseconds before returning.
 func DelayNS(ns uint64) {
 	sdlDelayNS(ns)
 }
