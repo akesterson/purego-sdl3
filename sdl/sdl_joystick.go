@@ -151,10 +151,17 @@ func GetJoystickFromPlayerIndex(playerIndex int32) *Joystick {
 // 	return sdlSendJoystickVirtualSensorData(joystick, sensorType, sensor_timestamp, data, num_values)
 // }
 
-// TODO: конкретные пропы
 func GetJoystickProperties(joystick *Joystick) PropertiesID {
 	return sdlGetJoystickProperties(joystick)
 }
+
+const (
+	PropJoystickCapMonoLEDBoolean       = "SDL.joystick.cap.mono_led"
+	PropJoystickCapRGBLEDBoolean        = "SDL.joystick.cap.rgb_led"
+	PropJoystickCapPlayerLEDBoolean     = "SDL.joystick.cap.player_led"
+	PropJoystickCapRumbleBoolean        = "SDL.joystick.cap.rumble"
+	PropJoystickCapTriggerRumbleBoolean = "SDL.joystick.cap.trigger_rumble"
+)
 
 func GetJoystickName(joystick *Joystick) string {
 	return sdlGetJoystickName(joystick)
@@ -255,6 +262,18 @@ func GetJoystickBall(joystick *Joystick, ball int32, dx *int32, dy *int32) bool 
 func GetJoystickHat(joystick *Joystick, hat int32) uint8 {
 	return sdlGetJoystickHat(joystick, hat)
 }
+
+const (
+	HatCentered  = 0x00
+	HatUp        = 0x01
+	HatRight     = 0x02
+	HatDown      = 0x04
+	HatLeft      = 0x08
+	HatRightUp   = HatRight | HatUp
+	HatRightDown = HatRight | HatDown
+	HatLeftUp    = HatLeft | HatUp
+	HatLeftDown  = HatLeft | HatDown
+)
 
 func GetJoystickButton(joystick *Joystick, button int32) bool {
 	return sdlGetJoystickButton(joystick, button)
