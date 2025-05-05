@@ -89,8 +89,8 @@ var (
 	sdlCloseCamera func(*Camera)
 	// sdlCloseGamepad                          func(*Gamepad)
 	// sdlCloseHaptic                           func(*Haptic)
-	sdlCloseIO func(*IOStream) bool
-	// sdlCloseJoystick                         func(*Joystick)
+	sdlCloseIO       func(*IOStream) bool
+	sdlCloseJoystick func(*Joystick)
 	// sdlCloseSensor                           func(*Sensor)
 	// sdlCloseStorage                          func(*Storage) bool
 	// sdlCompareAndSwapAtomicInt               func(*AtomicInt, int32, int32) bool
@@ -378,37 +378,38 @@ var (
 	// sdlGetIOProperties                       func(*IOStream) PropertiesID
 	// sdlGetIOSize                             func(*IOStream) int64
 	// sdlGetIOStatus                           func(*IOStream) IOStatus
-	// sdlGetJoystickAxis                       func(*Joystick, int32) int16
-	// sdlGetJoystickAxisInitialState           func(*Joystick, int32, *int16) bool
-	// sdlGetJoystickBall                       func(*Joystick, int32, *int32, *int32) bool
-	// sdlGetJoystickButton                     func(*Joystick, int32) bool
-	// sdlGetJoystickConnectionState            func(*Joystick) JoystickConnectionState
-	// sdlGetJoystickFirmwareVersion            func(*Joystick) uint16
-	// sdlGetJoystickFromID                     func(JoystickID) *Joystick
-	// sdlGetJoystickFromPlayerIndex            func(int32) *Joystick
-	// sdlGetJoystickGUID                       func(*Joystick) GUID
-	// sdlGetJoystickGUIDForID                  func(JoystickID) GUID
-	// sdlGetJoystickGUIDInfo                   func(GUID, *uint16, *uint16, *uint16, *uint16)
-	// sdlGetJoystickHat                        func(*Joystick, int32) uint8
-	// sdlGetJoystickID                         func(*Joystick) JoystickID
-	// sdlGetJoystickName                       func(*Joystick) string
-	// sdlGetJoystickNameForID                  func(JoystickID) string
-	// sdlGetJoystickPath                       func(*Joystick) string
-	// sdlGetJoystickPathForID                  func(JoystickID) string
-	// sdlGetJoystickPlayerIndex                func(*Joystick) int32
-	// sdlGetJoystickPlayerIndexForID           func(JoystickID) int32
-	// sdlGetJoystickPowerInfo                  func(*Joystick, *int32) PowerState
-	// sdlGetJoystickProduct                    func(*Joystick) uint16
-	// sdlGetJoystickProductForID               func(JoystickID) uint16
-	// sdlGetJoystickProductVersion             func(*Joystick) uint16
-	// sdlGetJoystickProductVersionForID        func(JoystickID) uint16
-	// sdlGetJoystickProperties                 func(*Joystick) PropertiesID
-	// sdlGetJoysticks                          func(*int32) *JoystickID
-	// sdlGetJoystickSerial                     func(*Joystick) string
-	// sdlGetJoystickType                       func(*Joystick) JoystickType
-	// sdlGetJoystickTypeForID                  func(JoystickID) JoystickType
-	// sdlGetJoystickVendor                     func(*Joystick) uint16
-	// sdlGetJoystickVendorForID                func(JoystickID) uint16
+	sdlGetJoystickAxis             func(*Joystick, int32) int16
+	sdlGetJoystickAxisInitialState func(*Joystick, int32, *int16) bool
+	sdlGetJoystickBall             func(*Joystick, int32, *int32, *int32) bool
+	sdlGetJoystickButton           func(*Joystick, int32) bool
+	sdlGetJoystickConnectionState  func(*Joystick) JoystickConnectionState
+	sdlGetJoystickFirmwareVersion  func(*Joystick) uint16
+	sdlGetJoystickFromID           func(JoystickID) *Joystick
+	sdlGetJoystickFromPlayerIndex  func(int32) *Joystick
+	// sdlGetJoystickGUID                func(*Joystick) GUID
+	// sdlGetJoystickGUIDForID           func(JoystickID) GUID
+	// sdlGetJoystickGUIDInfo            func(GUID, *uint16, *uint16, *uint16, *uint16)
+	sdlGetJoystickHat                 func(*Joystick, int32) uint8
+	sdlGetJoystickID                  func(*Joystick) JoystickID
+	sdlGetJoystickName                func(*Joystick) string
+	sdlGetJoystickNameForID           func(JoystickID) string
+	sdlGetJoystickPath                func(*Joystick) string
+	sdlGetJoystickPathForID           func(JoystickID) string
+	sdlGetJoystickPlayerIndex         func(*Joystick) int32
+	sdlGetJoystickPlayerIndexForID    func(JoystickID) int32
+	sdlGetJoystickPowerInfo           func(*Joystick, *int32) PowerState
+	sdlGetJoystickProduct             func(*Joystick) uint16
+	sdlGetJoystickProductForID        func(JoystickID) uint16
+	sdlGetJoystickProductVersion      func(*Joystick) uint16
+	sdlGetJoystickProductVersionForID func(JoystickID) uint16
+	sdlGetJoystickProperties          func(*Joystick) PropertiesID
+	sdlGetJoysticks                   func(*int32) *JoystickID
+	sdlGetJoystickSerial              func(*Joystick) string
+	sdlGetJoystickType                func(*Joystick) JoystickType
+	sdlGetJoystickTypeForID           func(JoystickID) JoystickType
+	sdlGetJoystickVendor              func(*Joystick) uint16
+	sdlGetJoystickVendorForID         func(JoystickID) uint16
+
 	sdlGetKeyboardFocus     func() *Window
 	sdlGetKeyboardNameForID func(KeyboardID) string
 	sdlGetKeyboards         func(*int32) *KeyboardID
@@ -436,10 +437,10 @@ var (
 	// sdlGetNumGamepadTouchpads                func(*Gamepad) int32
 	// sdlGetNumGPUDrivers                      func() int32
 	// sdlGetNumHapticAxes                      func(*Haptic) int32
-	// sdlGetNumJoystickAxes                    func(*Joystick) int32
-	// sdlGetNumJoystickBalls                   func(*Joystick) int32
-	// sdlGetNumJoystickButtons                 func(*Joystick) int32
-	// sdlGetNumJoystickHats                    func(*Joystick) int32
+	sdlGetNumJoystickAxes    func(*Joystick) int32
+	sdlGetNumJoystickBalls   func(*Joystick) int32
+	sdlGetNumJoystickButtons func(*Joystick) int32
+	sdlGetNumJoystickHats    func(*Joystick) int32
 	// sdlGetNumLogicalCPUCores                 func() int32
 	sdlGetNumRenderDrivers func() int32
 	// sdlGetNumVideoDrivers                    func() int32
@@ -624,7 +625,7 @@ var (
 	sdlHasEvents func(EventType, EventType) bool
 	// sdlHasExactlyOneBitSet32                 func(uint32) bool
 	// sdlHasGamepad                            func() bool
-	// sdlHasJoystick                           func() bool
+	sdlHasJoystick func() bool
 	sdlHasKeyboard func() bool
 	// sdlHasLASX                               func() bool
 	// sdlHasLSX                                func() bool
@@ -692,7 +693,7 @@ var (
 	// sdlisinf                                 func(float64) int32
 	// sdlisinff                                func(float32) int32
 	// sdlIsJoystickHaptic                      func(*Joystick) bool
-	// sdlIsJoystickVirtual                     func(JoystickID) bool
+	// sdlIsJoystickVirtual func(JoystickID) bool
 	// sdlislower                               func(int32) int32
 	sdlIsMainThread func() bool
 	// sdlIsMouseHaptic                         func() bool
@@ -706,8 +707,8 @@ var (
 	// sdlisupper                               func(int32) int32
 	// sdlisxdigit                              func(int32) int32
 	// sdlitoa                                  func(int32, string, int32) string
-	// sdlJoystickConnected                     func(*Joystick) bool
-	// sdlJoystickEventsEnabled                 func() bool
+	sdlJoystickConnected     func(*Joystick) bool
+	sdlJoystickEventsEnabled func() bool
 	// sdlKillProcess                           func(*Process, bool) bool
 	// sdllltoa                                 func(int64, string, int32) string
 	sdlLoadBMP   func(string) *Surface
@@ -720,7 +721,7 @@ var (
 	// sdlLoadWAV                               func(string, *AudioSpec, **uint8, *uint32) bool
 	// sdlLoadWAV_IO                            func(*IOStream, bool, *AudioSpec, **uint8, *uint32) bool
 	// sdlLockAudioStream                       func(*AudioStream) bool
-	// sdlLockJoysticks                         func()
+	sdlLockJoysticks func()
 	// sdlLockMutex                             func(*Mutex)
 	sdlLockProperties func(PropertiesID) bool
 	// sdlLockRWLockForReading                  func(*RWLock)
@@ -785,7 +786,7 @@ var (
 	// sdlOpenHapticFromJoystick                func(*Joystick) *Haptic
 	// sdlOpenHapticFromMouse                   func() *Haptic
 	// sdlOpenIO                                func(*IOStreamInterface, unsafe.Pointer) *IOStream
-	// sdlOpenJoystick                          func(JoystickID) *Joystick
+	sdlOpenJoystick func(JoystickID) *Joystick
 	// sdlOpenSensor                            func(SensorID) *Sensor
 	// sdlOpenStorage                           func(*StorageInterface, unsafe.Pointer) *Storage
 	// sdlOpenTitleStorage                      func(string, PropertiesID) *Storage
@@ -902,8 +903,8 @@ var (
 	// sdlroundf                                func(float32) float32
 	// sdlRumbleGamepad                         func(*Gamepad, uint16, uint16, uint32) bool
 	// sdlRumbleGamepadTriggers                 func(*Gamepad, uint16, uint16, uint32) bool
-	// sdlRumbleJoystick                        func(*Joystick, uint16, uint16, uint32) bool
-	// sdlRumbleJoystickTriggers                func(*Joystick, uint16, uint16, uint32) bool
+	sdlRumbleJoystick         func(*Joystick, uint16, uint16, uint32) bool
+	sdlRumbleJoystickTriggers func(*Joystick, uint16, uint16, uint32) bool
 	// sdlRunApp                                func(int32, **byte, main_func, unsafe.Pointer) int32
 	// sdlRunHapticEffect                       func(*Haptic, int32, uint32) bool
 	// sdlRunOnMainThread                       func(MainThreadCallback, unsafe.Pointer, bool) bool
@@ -918,8 +919,8 @@ var (
 	// sdlScreenSaverEnabled                    func() bool
 	// sdlSeekIO                                func(*IOStream, int64, IOWhence) int64
 	// sdlSendGamepadEffect                     func(*Gamepad, unsafe.Pointer, int32) bool
-	// sdlSendJoystickEffect                    func(*Joystick, unsafe.Pointer, int32) bool
-	// sdlSendJoystickVirtualSensorData         func(*Joystick, SensorType, uint64, *float32, int32) bool
+	sdlSendJoystickEffect func(*Joystick, unsafe.Pointer, int32) bool
+	// sdlSendJoystickVirtualSensorData func(*Joystick, SensorType, uint64, *float32, int32) bool
 	// sdlSetAppMetadata                        func(string, string, string) bool
 	// sdlSetAppMetadataProperty                func(string, string) bool
 	// sdlSetAssertionHandler                   func(AssertionHandler, unsafe.Pointer)
@@ -965,9 +966,9 @@ var (
 	sdlSetHint             func(string, string) bool
 	sdlSetHintWithPriority func(string, string, HintPriority) bool
 	// sdlSetInitialized                        func(*InitState, bool)
-	// sdlSetJoystickEventsEnabled              func(bool)
-	// sdlSetJoystickLED                        func(*Joystick, uint8, uint8, uint8) bool
-	// sdlSetJoystickPlayerIndex                func(*Joystick, int32) bool
+	sdlSetJoystickEventsEnabled func(bool)
+	sdlSetJoystickLED           func(*Joystick, uint8, uint8, uint8) bool
+	sdlSetJoystickPlayerIndex   func(*Joystick, int32) bool
 	// sdlSetJoystickVirtualAxis                func(*Joystick, int32, int16) bool
 	// sdlSetJoystickVirtualBall                func(*Joystick, int32, int16, int16) bool
 	// sdlSetJoystickVirtualButton              func(*Joystick, int32, bool) bool
@@ -1137,7 +1138,7 @@ var (
 	// sdlUnbindAudioStreams                    func(**AudioStream, int32)
 	// sdlUnloadObject                          func(*SharedObject)
 	// sdlUnlockAudioStream                     func(*AudioStream) bool
-	// sdlUnlockJoysticks                       func()
+	sdlUnlockJoysticks func()
 	// sdlUnlockMutex                           func(*Mutex)
 	sdlUnlockProperties func(PropertiesID)
 	// sdlUnlockRWLock                          func(*RWLock)
@@ -1149,7 +1150,7 @@ var (
 	// sdlUnsetEnvironmentVariable              func(*Environment, string) bool
 	// sdlUpdateGamepads                        func()
 	// sdlUpdateHapticEffect                    func(*Haptic, int32, *HapticEffect) bool
-	// sdlUpdateJoysticks                       func()
+	sdlUpdateJoysticks func()
 	sdlUpdateNVTexture uintptr
 	// sdlUpdateSensors                         func()
 	sdlUpdateTexture       uintptr
@@ -1316,7 +1317,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlCloseGamepad, lib, "SDL_CloseGamepad")
 	// purego.RegisterLibFunc(&sdlCloseHaptic, lib, "SDL_CloseHaptic")
 	purego.RegisterLibFunc(&sdlCloseIO, lib, "SDL_CloseIO")
-	// purego.RegisterLibFunc(&sdlCloseJoystick, lib, "SDL_CloseJoystick")
+	purego.RegisterLibFunc(&sdlCloseJoystick, lib, "SDL_CloseJoystick")
 	// purego.RegisterLibFunc(&sdlCloseSensor, lib, "SDL_CloseSensor")
 	// purego.RegisterLibFunc(&sdlCloseStorage, lib, "SDL_CloseStorage")
 	// purego.RegisterLibFunc(&sdlCompareAndSwapAtomicInt, lib, "SDL_CompareAndSwapAtomicInt")
@@ -1604,37 +1605,37 @@ func init() {
 	// purego.RegisterLibFunc(&sdlGetIOProperties, lib, "SDL_GetIOProperties")
 	// purego.RegisterLibFunc(&sdlGetIOSize, lib, "SDL_GetIOSize")
 	// purego.RegisterLibFunc(&sdlGetIOStatus, lib, "SDL_GetIOStatus")
-	// purego.RegisterLibFunc(&sdlGetJoystickAxis, lib, "SDL_GetJoystickAxis")
-	// purego.RegisterLibFunc(&sdlGetJoystickAxisInitialState, lib, "SDL_GetJoystickAxisInitialState")
-	// purego.RegisterLibFunc(&sdlGetJoystickBall, lib, "SDL_GetJoystickBall")
-	// purego.RegisterLibFunc(&sdlGetJoystickButton, lib, "SDL_GetJoystickButton")
-	// purego.RegisterLibFunc(&sdlGetJoystickConnectionState, lib, "SDL_GetJoystickConnectionState")
-	// purego.RegisterLibFunc(&sdlGetJoystickFirmwareVersion, lib, "SDL_GetJoystickFirmwareVersion")
-	// purego.RegisterLibFunc(&sdlGetJoystickFromID, lib, "SDL_GetJoystickFromID")
-	// purego.RegisterLibFunc(&sdlGetJoystickFromPlayerIndex, lib, "SDL_GetJoystickFromPlayerIndex")
+	purego.RegisterLibFunc(&sdlGetJoystickAxis, lib, "SDL_GetJoystickAxis")
+	purego.RegisterLibFunc(&sdlGetJoystickAxisInitialState, lib, "SDL_GetJoystickAxisInitialState")
+	purego.RegisterLibFunc(&sdlGetJoystickBall, lib, "SDL_GetJoystickBall")
+	purego.RegisterLibFunc(&sdlGetJoystickButton, lib, "SDL_GetJoystickButton")
+	purego.RegisterLibFunc(&sdlGetJoystickConnectionState, lib, "SDL_GetJoystickConnectionState")
+	purego.RegisterLibFunc(&sdlGetJoystickFirmwareVersion, lib, "SDL_GetJoystickFirmwareVersion")
+	purego.RegisterLibFunc(&sdlGetJoystickFromID, lib, "SDL_GetJoystickFromID")
+	purego.RegisterLibFunc(&sdlGetJoystickFromPlayerIndex, lib, "SDL_GetJoystickFromPlayerIndex")
 	// purego.RegisterLibFunc(&sdlGetJoystickGUID, lib, "SDL_GetJoystickGUID")
 	// purego.RegisterLibFunc(&sdlGetJoystickGUIDForID, lib, "SDL_GetJoystickGUIDForID")
 	// purego.RegisterLibFunc(&sdlGetJoystickGUIDInfo, lib, "SDL_GetJoystickGUIDInfo")
-	// purego.RegisterLibFunc(&sdlGetJoystickHat, lib, "SDL_GetJoystickHat")
-	// purego.RegisterLibFunc(&sdlGetJoystickID, lib, "SDL_GetJoystickID")
-	// purego.RegisterLibFunc(&sdlGetJoystickName, lib, "SDL_GetJoystickName")
-	// purego.RegisterLibFunc(&sdlGetJoystickNameForID, lib, "SDL_GetJoystickNameForID")
-	// purego.RegisterLibFunc(&sdlGetJoystickPath, lib, "SDL_GetJoystickPath")
-	// purego.RegisterLibFunc(&sdlGetJoystickPathForID, lib, "SDL_GetJoystickPathForID")
-	// purego.RegisterLibFunc(&sdlGetJoystickPlayerIndex, lib, "SDL_GetJoystickPlayerIndex")
-	// purego.RegisterLibFunc(&sdlGetJoystickPlayerIndexForID, lib, "SDL_GetJoystickPlayerIndexForID")
-	// purego.RegisterLibFunc(&sdlGetJoystickPowerInfo, lib, "SDL_GetJoystickPowerInfo")
-	// purego.RegisterLibFunc(&sdlGetJoystickProduct, lib, "SDL_GetJoystickProduct")
-	// purego.RegisterLibFunc(&sdlGetJoystickProductForID, lib, "SDL_GetJoystickProductForID")
-	// purego.RegisterLibFunc(&sdlGetJoystickProductVersion, lib, "SDL_GetJoystickProductVersion")
-	// purego.RegisterLibFunc(&sdlGetJoystickProductVersionForID, lib, "SDL_GetJoystickProductVersionForID")
-	// purego.RegisterLibFunc(&sdlGetJoystickProperties, lib, "SDL_GetJoystickProperties")
-	// purego.RegisterLibFunc(&sdlGetJoysticks, lib, "SDL_GetJoysticks")
-	// purego.RegisterLibFunc(&sdlGetJoystickSerial, lib, "SDL_GetJoystickSerial")
-	// purego.RegisterLibFunc(&sdlGetJoystickType, lib, "SDL_GetJoystickType")
-	// purego.RegisterLibFunc(&sdlGetJoystickTypeForID, lib, "SDL_GetJoystickTypeForID")
-	// purego.RegisterLibFunc(&sdlGetJoystickVendor, lib, "SDL_GetJoystickVendor")
-	// purego.RegisterLibFunc(&sdlGetJoystickVendorForID, lib, "SDL_GetJoystickVendorForID")
+	purego.RegisterLibFunc(&sdlGetJoystickHat, lib, "SDL_GetJoystickHat")
+	purego.RegisterLibFunc(&sdlGetJoystickID, lib, "SDL_GetJoystickID")
+	purego.RegisterLibFunc(&sdlGetJoystickName, lib, "SDL_GetJoystickName")
+	purego.RegisterLibFunc(&sdlGetJoystickNameForID, lib, "SDL_GetJoystickNameForID")
+	purego.RegisterLibFunc(&sdlGetJoystickPath, lib, "SDL_GetJoystickPath")
+	purego.RegisterLibFunc(&sdlGetJoystickPathForID, lib, "SDL_GetJoystickPathForID")
+	purego.RegisterLibFunc(&sdlGetJoystickPlayerIndex, lib, "SDL_GetJoystickPlayerIndex")
+	purego.RegisterLibFunc(&sdlGetJoystickPlayerIndexForID, lib, "SDL_GetJoystickPlayerIndexForID")
+	purego.RegisterLibFunc(&sdlGetJoystickPowerInfo, lib, "SDL_GetJoystickPowerInfo")
+	purego.RegisterLibFunc(&sdlGetJoystickProduct, lib, "SDL_GetJoystickProduct")
+	purego.RegisterLibFunc(&sdlGetJoystickProductForID, lib, "SDL_GetJoystickProductForID")
+	purego.RegisterLibFunc(&sdlGetJoystickProductVersion, lib, "SDL_GetJoystickProductVersion")
+	purego.RegisterLibFunc(&sdlGetJoystickProductVersionForID, lib, "SDL_GetJoystickProductVersionForID")
+	purego.RegisterLibFunc(&sdlGetJoystickProperties, lib, "SDL_GetJoystickProperties")
+	purego.RegisterLibFunc(&sdlGetJoysticks, lib, "SDL_GetJoysticks")
+	purego.RegisterLibFunc(&sdlGetJoystickSerial, lib, "SDL_GetJoystickSerial")
+	purego.RegisterLibFunc(&sdlGetJoystickType, lib, "SDL_GetJoystickType")
+	purego.RegisterLibFunc(&sdlGetJoystickTypeForID, lib, "SDL_GetJoystickTypeForID")
+	purego.RegisterLibFunc(&sdlGetJoystickVendor, lib, "SDL_GetJoystickVendor")
+	purego.RegisterLibFunc(&sdlGetJoystickVendorForID, lib, "SDL_GetJoystickVendorForID")
 	purego.RegisterLibFunc(&sdlGetKeyboardFocus, lib, "SDL_GetKeyboardFocus")
 	purego.RegisterLibFunc(&sdlGetKeyboardNameForID, lib, "SDL_GetKeyboardNameForID")
 	purego.RegisterLibFunc(&sdlGetKeyboards, lib, "SDL_GetKeyboards")
@@ -1662,10 +1663,10 @@ func init() {
 	// purego.RegisterLibFunc(&sdlGetNumGamepadTouchpads, lib, "SDL_GetNumGamepadTouchpads")
 	// purego.RegisterLibFunc(&sdlGetNumGPUDrivers, lib, "SDL_GetNumGPUDrivers")
 	// purego.RegisterLibFunc(&sdlGetNumHapticAxes, lib, "SDL_GetNumHapticAxes")
-	// purego.RegisterLibFunc(&sdlGetNumJoystickAxes, lib, "SDL_GetNumJoystickAxes")
-	// purego.RegisterLibFunc(&sdlGetNumJoystickBalls, lib, "SDL_GetNumJoystickBalls")
-	// purego.RegisterLibFunc(&sdlGetNumJoystickButtons, lib, "SDL_GetNumJoystickButtons")
-	// purego.RegisterLibFunc(&sdlGetNumJoystickHats, lib, "SDL_GetNumJoystickHats")
+	purego.RegisterLibFunc(&sdlGetNumJoystickAxes, lib, "SDL_GetNumJoystickAxes")
+	purego.RegisterLibFunc(&sdlGetNumJoystickBalls, lib, "SDL_GetNumJoystickBalls")
+	purego.RegisterLibFunc(&sdlGetNumJoystickButtons, lib, "SDL_GetNumJoystickButtons")
+	purego.RegisterLibFunc(&sdlGetNumJoystickHats, lib, "SDL_GetNumJoystickHats")
 	// purego.RegisterLibFunc(&sdlGetNumLogicalCPUCores, lib, "SDL_GetNumLogicalCPUCores")
 	purego.RegisterLibFunc(&sdlGetNumRenderDrivers, lib, "SDL_GetNumRenderDrivers")
 	// purego.RegisterLibFunc(&sdlGetNumVideoDrivers, lib, "SDL_GetNumVideoDrivers")
@@ -1850,7 +1851,7 @@ func init() {
 	purego.RegisterLibFunc(&sdlHasEvents, lib, "SDL_HasEvents")
 	// purego.RegisterLibFunc(&sdlHasExactlyOneBitSet32, lib, "SDL_HasExactlyOneBitSet32")
 	// purego.RegisterLibFunc(&sdlHasGamepad, lib, "SDL_HasGamepad")
-	// purego.RegisterLibFunc(&sdlHasJoystick, lib, "SDL_HasJoystick")
+	purego.RegisterLibFunc(&sdlHasJoystick, lib, "SDL_HasJoystick")
 	purego.RegisterLibFunc(&sdlHasKeyboard, lib, "SDL_HasKeyboard")
 	// purego.RegisterLibFunc(&sdlHasLASX, lib, "SDL_HasLASX")
 	// purego.RegisterLibFunc(&sdlHasLSX, lib, "SDL_HasLSX")
@@ -1932,8 +1933,8 @@ func init() {
 	// purego.RegisterLibFunc(&sdlisupper, lib, "SDL_isupper")
 	// purego.RegisterLibFunc(&sdlisxdigit, lib, "SDL_isxdigit")
 	// purego.RegisterLibFunc(&sdlitoa, lib, "SDL_itoa")
-	// purego.RegisterLibFunc(&sdlJoystickConnected, lib, "SDL_JoystickConnected")
-	// purego.RegisterLibFunc(&sdlJoystickEventsEnabled, lib, "SDL_JoystickEventsEnabled")
+	purego.RegisterLibFunc(&sdlJoystickConnected, lib, "SDL_JoystickConnected")
+	purego.RegisterLibFunc(&sdlJoystickEventsEnabled, lib, "SDL_JoystickEventsEnabled")
 	// purego.RegisterLibFunc(&sdlKillProcess, lib, "SDL_KillProcess")
 	// purego.RegisterLibFunc(&sdllltoa, lib, "SDL_lltoa")
 	purego.RegisterLibFunc(&sdlLoadBMP, lib, "SDL_LoadBMP")
@@ -1946,7 +1947,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlLoadWAV, lib, "SDL_LoadWAV")
 	// purego.RegisterLibFunc(&sdlLoadWAV_IO, lib, "SDL_LoadWAV_IO")
 	// purego.RegisterLibFunc(&sdlLockAudioStream, lib, "SDL_LockAudioStream")
-	// purego.RegisterLibFunc(&sdlLockJoysticks, lib, "SDL_LockJoysticks")
+	purego.RegisterLibFunc(&sdlLockJoysticks, lib, "SDL_LockJoysticks")
 	// purego.RegisterLibFunc(&sdlLockMutex, lib, "SDL_LockMutex")
 	purego.RegisterLibFunc(&sdlLockProperties, lib, "SDL_LockProperties")
 	// purego.RegisterLibFunc(&sdlLockRWLockForReading, lib, "SDL_LockRWLockForReading")
@@ -2011,7 +2012,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlOpenHapticFromJoystick, lib, "SDL_OpenHapticFromJoystick")
 	// purego.RegisterLibFunc(&sdlOpenHapticFromMouse, lib, "SDL_OpenHapticFromMouse")
 	// purego.RegisterLibFunc(&sdlOpenIO, lib, "SDL_OpenIO")
-	// purego.RegisterLibFunc(&sdlOpenJoystick, lib, "SDL_OpenJoystick")
+	purego.RegisterLibFunc(&sdlOpenJoystick, lib, "SDL_OpenJoystick")
 	// purego.RegisterLibFunc(&sdlOpenSensor, lib, "SDL_OpenSensor")
 	// purego.RegisterLibFunc(&sdlOpenStorage, lib, "SDL_OpenStorage")
 	// purego.RegisterLibFunc(&sdlOpenTitleStorage, lib, "SDL_OpenTitleStorage")
@@ -2128,8 +2129,8 @@ func init() {
 	// purego.RegisterLibFunc(&sdlroundf, lib, "SDL_roundf")
 	// purego.RegisterLibFunc(&sdlRumbleGamepad, lib, "SDL_RumbleGamepad")
 	// purego.RegisterLibFunc(&sdlRumbleGamepadTriggers, lib, "SDL_RumbleGamepadTriggers")
-	// purego.RegisterLibFunc(&sdlRumbleJoystick, lib, "SDL_RumbleJoystick")
-	// purego.RegisterLibFunc(&sdlRumbleJoystickTriggers, lib, "SDL_RumbleJoystickTriggers")
+	purego.RegisterLibFunc(&sdlRumbleJoystick, lib, "SDL_RumbleJoystick")
+	purego.RegisterLibFunc(&sdlRumbleJoystickTriggers, lib, "SDL_RumbleJoystickTriggers")
 	// purego.RegisterLibFunc(&sdlRunApp, lib, "SDL_RunApp")
 	// purego.RegisterLibFunc(&sdlRunHapticEffect, lib, "SDL_RunHapticEffect")
 	// purego.RegisterLibFunc(&sdlRunOnMainThread, lib, "SDL_RunOnMainThread")
@@ -2144,7 +2145,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlScreenSaverEnabled, lib, "SDL_ScreenSaverEnabled")
 	// purego.RegisterLibFunc(&sdlSeekIO, lib, "SDL_SeekIO")
 	// purego.RegisterLibFunc(&sdlSendGamepadEffect, lib, "SDL_SendGamepadEffect")
-	// purego.RegisterLibFunc(&sdlSendJoystickEffect, lib, "SDL_SendJoystickEffect")
+	purego.RegisterLibFunc(&sdlSendJoystickEffect, lib, "SDL_SendJoystickEffect")
 	// purego.RegisterLibFunc(&sdlSendJoystickVirtualSensorData, lib, "SDL_SendJoystickVirtualSensorData")
 	// purego.RegisterLibFunc(&sdlSetAppMetadata, lib, "SDL_SetAppMetadata")
 	// purego.RegisterLibFunc(&sdlSetAppMetadataProperty, lib, "SDL_SetAppMetadataProperty")
@@ -2191,9 +2192,9 @@ func init() {
 	purego.RegisterLibFunc(&sdlSetHint, lib, "SDL_SetHint")
 	purego.RegisterLibFunc(&sdlSetHintWithPriority, lib, "SDL_SetHintWithPriority")
 	// purego.RegisterLibFunc(&sdlSetInitialized, lib, "SDL_SetInitialized")
-	// purego.RegisterLibFunc(&sdlSetJoystickEventsEnabled, lib, "SDL_SetJoystickEventsEnabled")
-	// purego.RegisterLibFunc(&sdlSetJoystickLED, lib, "SDL_SetJoystickLED")
-	// purego.RegisterLibFunc(&sdlSetJoystickPlayerIndex, lib, "SDL_SetJoystickPlayerIndex")
+	purego.RegisterLibFunc(&sdlSetJoystickEventsEnabled, lib, "SDL_SetJoystickEventsEnabled")
+	purego.RegisterLibFunc(&sdlSetJoystickLED, lib, "SDL_SetJoystickLED")
+	purego.RegisterLibFunc(&sdlSetJoystickPlayerIndex, lib, "SDL_SetJoystickPlayerIndex")
 	// purego.RegisterLibFunc(&sdlSetJoystickVirtualAxis, lib, "SDL_SetJoystickVirtualAxis")
 	// purego.RegisterLibFunc(&sdlSetJoystickVirtualBall, lib, "SDL_SetJoystickVirtualBall")
 	// purego.RegisterLibFunc(&sdlSetJoystickVirtualButton, lib, "SDL_SetJoystickVirtualButton")
@@ -2363,7 +2364,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlUnbindAudioStreams, lib, "SDL_UnbindAudioStreams")
 	// purego.RegisterLibFunc(&sdlUnloadObject, lib, "SDL_UnloadObject")
 	// purego.RegisterLibFunc(&sdlUnlockAudioStream, lib, "SDL_UnlockAudioStream")
-	// purego.RegisterLibFunc(&sdlUnlockJoysticks, lib, "SDL_UnlockJoysticks")
+	purego.RegisterLibFunc(&sdlUnlockJoysticks, lib, "SDL_UnlockJoysticks")
 	// purego.RegisterLibFunc(&sdlUnlockMutex, lib, "SDL_UnlockMutex")
 	purego.RegisterLibFunc(&sdlUnlockProperties, lib, "SDL_UnlockProperties")
 	// purego.RegisterLibFunc(&sdlUnlockRWLock, lib, "SDL_UnlockRWLock")
@@ -2375,7 +2376,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlUnsetEnvironmentVariable, lib, "SDL_UnsetEnvironmentVariable")
 	// purego.RegisterLibFunc(&sdlUpdateGamepads, lib, "SDL_UpdateGamepads")
 	// purego.RegisterLibFunc(&sdlUpdateHapticEffect, lib, "SDL_UpdateHapticEffect")
-	// purego.RegisterLibFunc(&sdlUpdateJoysticks, lib, "SDL_UpdateJoysticks")
+	purego.RegisterLibFunc(&sdlUpdateJoysticks, lib, "SDL_UpdateJoysticks")
 	sdlUpdateNVTexture = shared.Get(lib, "SDL_UpdateNVTexture")
 	// purego.RegisterLibFunc(&sdlUpdateSensors, lib, "SDL_UpdateSensors")
 	sdlUpdateTexture = shared.Get(lib, "SDL_UpdateTexture")
