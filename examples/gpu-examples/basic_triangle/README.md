@@ -1,4 +1,4 @@
-This example code creates a triangle based on new sdl3 GPU API.
+This example code creates a triangle based on SDL3's new GPU API. It is a recreation of one of Caleb Cornett's [examples](https://github.com/TheSpydog/SDL_gpu_examples).
 
 Windows:
 
