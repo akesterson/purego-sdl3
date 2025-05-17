@@ -481,12 +481,12 @@ type GPURasterizerState struct {
 }
 
 type GPUMultisampleState struct {
-	SampleCount GPUSampleCount
-	SampleMask  uint32
-	EnableMask  bool
-	Padding1    uint8
-	Padding2    uint8
-	Padding3    uint8
+	SampleCount           GPUSampleCount
+	SampleMask            uint32
+	EnableMask            bool
+	EnableAlphaToCoverage bool
+	Padding2              uint8
+	Padding3              uint8
 }
 
 type GPUDepthStencilState struct {
