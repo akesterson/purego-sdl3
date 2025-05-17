@@ -1,6 +1,8 @@
 package sdl
 
-import "github.com/jupiterrider/purego-sdl3/internal/convert"
+import (
+	"github.com/jupiterrider/purego-sdl3/internal/convert"
+)
 
 type GPUSwapchainComposition uint32
 
@@ -455,9 +457,11 @@ type GPUColorTargetBlendState struct {
 }
 
 type GPUShaderCreateInfo struct {
-	CodeSize           uint64
-	Code               *uint8
-	EntryPoint         *byte // must be null-terminated string. use convert.ToBytePtr().
+	CodeSize uint64
+	Code     *uint8
+	// entryPoint must be a null-terminated C-style string.
+	// Use the methods GPUShaderCreateInfo.EntryPoint and GPUShaderCreateInfo.SetEntryPoint instead.
+	entryPoint         *byte
 	Format             GPUShaderFormat
 	Stage              GPUShaderStage
 	NumSamplers        uint32
@@ -465,6 +469,15 @@ type GPUShaderCreateInfo struct {
 	NumStorageBuffers  uint32
 	NumUniformBuffers  uint32
 	Props              PropertiesID
+}
+
+func (createInfo *GPUShaderCreateInfo) EntryPoint() string {
+	return convert.ToString(createInfo.entryPoint)
+}
+
+// SetEntryPoint specifies the entry point function name for the shader.
+func (createInfo *GPUShaderCreateInfo) SetEntryPoint(entryPoint string) {
+	createInfo.entryPoint = convert.ToBytePtr(entryPoint)
 }
 
 type GPURasterizerState struct {

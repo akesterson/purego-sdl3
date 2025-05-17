@@ -5,7 +5,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/jupiterrider/purego-sdl3/internal/convert"
 	"github.com/jupiterrider/purego-sdl3/sdl"
 )
 
@@ -54,7 +53,6 @@ func LoadShader(device *sdl.GPUDevice, shaderFilename string, samplerCount, unif
 	shaderInfo := sdl.GPUShaderCreateInfo{
 		CodeSize:           codeSize,
 		Code:               (*uint8)(code),
-		EntryPoint:         convert.ToBytePtr(entryPoint),
 		Format:             format,
 		Stage:              stage,
 		NumSamplers:        samplerCount,
@@ -62,6 +60,8 @@ func LoadShader(device *sdl.GPUDevice, shaderFilename string, samplerCount, unif
 		NumStorageBuffers:  storageBufferCount,
 		NumUniformBuffers:  storageTextureCount,
 	}
+
+	shaderInfo.SetEntryPoint(entryPoint)
 
 	shader := sdl.CreateGPUShader(device, &shaderInfo)
 	if shader == nil {
