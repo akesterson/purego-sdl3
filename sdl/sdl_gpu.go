@@ -527,6 +527,7 @@ type GPUGraphicsPipelineCreateInfo struct {
 	MultisampleState  GPUMultisampleState
 	DepthStencilState GPUDepthStencilState
 	TargetInfo        GPUGraphicsPipelineTargetInfo
+	Props             PropertiesID
 }
 
 type GPUGraphicsPipeline struct{}
