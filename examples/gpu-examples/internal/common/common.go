@@ -1,4 +1,4 @@
-package gpuexamples
+package common
 
 import (
 	"fmt"

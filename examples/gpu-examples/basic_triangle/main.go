@@ -1,7 +1,7 @@
 package main
 
 import (
-	gpuexamples "github.com/jupiterrider/purego-sdl3/examples/gpu-examples"
+	"github.com/jupiterrider/purego-sdl3/examples/gpu-examples/internal/common"
 	"github.com/jupiterrider/purego-sdl3/sdl"
 )
 
@@ -46,13 +46,13 @@ func main() {
 	defer sdl.ReleaseWindowFromGPUDevice(device, window)
 
 	// Create the shaders
-	vertexShader := gpuexamples.LoadShader(device, "RawTriangle.vert", 0, 0, 0, 0)
+	vertexShader := common.LoadShader(device, "RawTriangle.vert", 0, 0, 0, 0)
 	if vertexShader == nil {
 		sdl.Log("Failed to create vertex shader!")
 		return
 	}
 
-	fragmentShader := gpuexamples.LoadShader(device, "SolidColor.frag", 0, 0, 0, 0)
+	fragmentShader := common.LoadShader(device, "SolidColor.frag", 0, 0, 0, 0)
 	if fragmentShader == nil {
 		sdl.Log("Failed to create fragment shader!")
 		return
