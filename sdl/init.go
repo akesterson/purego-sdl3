@@ -215,8 +215,8 @@ var (
 	sdlFillSurfaceRect func(*Surface, *Rect, uint32) bool
 	// sdlFillSurfaceRects                      func(*Surface, *Rect, int32, uint32) bool
 	sdlFilterEvents func(EventFilter, unsafe.Pointer)
-	// sdlFlashWindow                           func(*Window, FlashOperation) bool
-	sdlFlipSurface func(*Surface, FlipMode) bool
+	sdlFlashWindow  func(*Window, FlashOperation) bool
+	sdlFlipSurface  func(*Surface, FlipMode) bool
 	// sdlfloor                                 func(float64) float64
 	// sdlfloorf                                func(float32) float32
 	// sdlFlushAudioStream                      func(*AudioStream) bool
@@ -280,13 +280,13 @@ var (
 	// sdlGetCurrentAudioDriver                 func() string
 	sdlGetCurrentCameraDriver func() string
 	// sdlGetCurrentDirectory                   func() string
-	// sdlGetCurrentDisplayMode                 func(DisplayID) *DisplayMode
+	sdlGetCurrentDisplayMode func(DisplayID) *DisplayMode
 	// sdlGetCurrentDisplayOrientation          func(DisplayID) DisplayOrientation
 	sdlGetCurrentRenderOutputSize func(*Renderer, *int32, *int32) bool
 	// sdlGetCurrentThreadID                    func() ThreadID
 	// sdlGetCurrentTime                        func(*Time) bool
-	// sdlGetCurrentVideoDriver                 func() string
-	sdlGetCursor func() *Cursor
+	sdlGetCurrentVideoDriver func() string
+	sdlGetCursor             func() *Cursor
 	// sdlGetDateTimeLocalePreferences          func(*DateFormat, *TimeFormat) bool
 	// sdlGetDayOfWeek                          func(int32, int32, int32) int32
 	// sdlGetDayOfYear                          func(int32, int32, int32) int32
@@ -299,8 +299,8 @@ var (
 	sdlGetDisplayContentScale func(DisplayID) float32
 	// sdlGetDisplayForPoint                    func(*Point) DisplayID
 	// sdlGetDisplayForRect                     func(*Rect) DisplayID
-	// sdlGetDisplayForWindow                   func(*Window) DisplayID
-	// sdlGetDisplayName                        func(DisplayID) string
+	sdlGetDisplayForWindow func(*Window) DisplayID
+	sdlGetDisplayName      func(DisplayID) string
 	// sdlGetDisplayProperties                  func(DisplayID) PropertiesID
 	// sdlGetDisplays                           func(*int32) *DisplayID
 	// sdlGetDisplayUsableBounds                func(DisplayID, *Rect) bool
@@ -588,7 +588,7 @@ var (
 	sdlGetWindowSizeInPixels func(*Window, *int32, *int32) bool
 	sdlGetWindowSurface      func(*Window) *Surface
 	// sdlGetWindowSurfaceVSync                 func(*Window, *int32) bool
-	// sdlGetWindowTitle                        func(*Window) string
+	sdlGetWindowTitle func(*Window) string
 	// sdlGL_CreateContext                      func(*Window) GLContext
 	// sdlGL_DestroyContext                     func(GLContext) bool
 	// sdlGL_ExtensionSupported                 func(string) bool
@@ -1044,7 +1044,7 @@ var (
 	// sdlSetWindowShape                        func(*Window, *Surface) bool
 	sdlSetWindowSize func(*Window, int32, int32) bool
 	// sdlSetWindowSurfaceVSync                 func(*Window, int32) bool
-	// sdlSetWindowTitle                        func(*Window, string) bool
+	sdlSetWindowTitle func(*Window, string) bool
 	// sdlSetX11EventHook                       func(X11EventHook, unsafe.Pointer)
 	// sdlShouldInit                            func(*InitState) bool
 	// sdlShouldQuit                            func(*InitState) bool
@@ -1442,7 +1442,7 @@ func init() {
 	purego.RegisterLibFunc(&sdlFillSurfaceRect, lib, "SDL_FillSurfaceRect")
 	// purego.RegisterLibFunc(&sdlFillSurfaceRects, lib, "SDL_FillSurfaceRects")
 	purego.RegisterLibFunc(&sdlFilterEvents, lib, "SDL_FilterEvents")
-	// purego.RegisterLibFunc(&sdlFlashWindow, lib, "SDL_FlashWindow")
+	purego.RegisterLibFunc(&sdlFlashWindow, lib, "SDL_FlashWindow")
 	purego.RegisterLibFunc(&sdlFlipSurface, lib, "SDL_FlipSurface")
 	// purego.RegisterLibFunc(&sdlfloor, lib, "SDL_floor")
 	// purego.RegisterLibFunc(&sdlfloorf, lib, "SDL_floorf")
@@ -1507,12 +1507,12 @@ func init() {
 	// purego.RegisterLibFunc(&sdlGetCurrentAudioDriver, lib, "SDL_GetCurrentAudioDriver")
 	purego.RegisterLibFunc(&sdlGetCurrentCameraDriver, lib, "SDL_GetCurrentCameraDriver")
 	// purego.RegisterLibFunc(&sdlGetCurrentDirectory, lib, "SDL_GetCurrentDirectory")
-	// purego.RegisterLibFunc(&sdlGetCurrentDisplayMode, lib, "SDL_GetCurrentDisplayMode")
+	purego.RegisterLibFunc(&sdlGetCurrentDisplayMode, lib, "SDL_GetCurrentDisplayMode")
 	// purego.RegisterLibFunc(&sdlGetCurrentDisplayOrientation, lib, "SDL_GetCurrentDisplayOrientation")
 	purego.RegisterLibFunc(&sdlGetCurrentRenderOutputSize, lib, "SDL_GetCurrentRenderOutputSize")
 	// purego.RegisterLibFunc(&sdlGetCurrentThreadID, lib, "SDL_GetCurrentThreadID")
 	// purego.RegisterLibFunc(&sdlGetCurrentTime, lib, "SDL_GetCurrentTime")
-	// purego.RegisterLibFunc(&sdlGetCurrentVideoDriver, lib, "SDL_GetCurrentVideoDriver")
+	purego.RegisterLibFunc(&sdlGetCurrentVideoDriver, lib, "SDL_GetCurrentVideoDriver")
 	purego.RegisterLibFunc(&sdlGetCursor, lib, "SDL_GetCursor")
 	// purego.RegisterLibFunc(&sdlGetDateTimeLocalePreferences, lib, "SDL_GetDateTimeLocalePreferences")
 	// purego.RegisterLibFunc(&sdlGetDayOfWeek, lib, "SDL_GetDayOfWeek")
@@ -1526,8 +1526,8 @@ func init() {
 	purego.RegisterLibFunc(&sdlGetDisplayContentScale, lib, "SDL_GetDisplayContentScale")
 	// purego.RegisterLibFunc(&sdlGetDisplayForPoint, lib, "SDL_GetDisplayForPoint")
 	// purego.RegisterLibFunc(&sdlGetDisplayForRect, lib, "SDL_GetDisplayForRect")
-	// purego.RegisterLibFunc(&sdlGetDisplayForWindow, lib, "SDL_GetDisplayForWindow")
-	// purego.RegisterLibFunc(&sdlGetDisplayName, lib, "SDL_GetDisplayName")
+	purego.RegisterLibFunc(&sdlGetDisplayForWindow, lib, "SDL_GetDisplayForWindow")
+	purego.RegisterLibFunc(&sdlGetDisplayName, lib, "SDL_GetDisplayName")
 	// purego.RegisterLibFunc(&sdlGetDisplayProperties, lib, "SDL_GetDisplayProperties")
 	// purego.RegisterLibFunc(&sdlGetDisplays, lib, "SDL_GetDisplays")
 	// purego.RegisterLibFunc(&sdlGetDisplayUsableBounds, lib, "SDL_GetDisplayUsableBounds")
@@ -1814,7 +1814,7 @@ func init() {
 	purego.RegisterLibFunc(&sdlGetWindowSizeInPixels, lib, "SDL_GetWindowSizeInPixels")
 	purego.RegisterLibFunc(&sdlGetWindowSurface, lib, "SDL_GetWindowSurface")
 	// purego.RegisterLibFunc(&sdlGetWindowSurfaceVSync, lib, "SDL_GetWindowSurfaceVSync")
-	// purego.RegisterLibFunc(&sdlGetWindowTitle, lib, "SDL_GetWindowTitle")
+	purego.RegisterLibFunc(&sdlGetWindowTitle, lib, "SDL_GetWindowTitle")
 	// purego.RegisterLibFunc(&sdlGL_CreateContext, lib, "SDL_GL_CreateContext")
 	// purego.RegisterLibFunc(&sdlGL_DestroyContext, lib, "SDL_GL_DestroyContext")
 	// purego.RegisterLibFunc(&sdlGL_ExtensionSupported, lib, "SDL_GL_ExtensionSupported")
@@ -2270,7 +2270,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlSetWindowShape, lib, "SDL_SetWindowShape")
 	purego.RegisterLibFunc(&sdlSetWindowSize, lib, "SDL_SetWindowSize")
 	// purego.RegisterLibFunc(&sdlSetWindowSurfaceVSync, lib, "SDL_SetWindowSurfaceVSync")
-	// purego.RegisterLibFunc(&sdlSetWindowTitle, lib, "SDL_SetWindowTitle")
+	purego.RegisterLibFunc(&sdlSetWindowTitle, lib, "SDL_SetWindowTitle")
 	// purego.RegisterLibFunc(&sdlSetX11EventHook, lib, "SDL_SetX11EventHook")
 	// purego.RegisterLibFunc(&sdlShouldInit, lib, "SDL_ShouldInit")
 	// purego.RegisterLibFunc(&sdlShouldQuit, lib, "SDL_ShouldQuit")

@@ -64,6 +64,20 @@ const (
 	FlashUntilFocused
 )
 
+type DisplayModeData struct{}
+
+type DisplayMode struct {
+	DisplayID              DisplayID
+	Format                 PixelFormat
+	W                      int32
+	H                      int32
+	PixelDensity           float32
+	RefreshRate            float32
+	RefreshRateNumerator   int32
+	RefreshRateDenominator int32
+	Internal               *DisplayModeData // private
+}
+
 type DisplayOrientation uint32
 
 const (
@@ -172,25 +186,25 @@ func CreateWindow(title string, w int32, h int32, flags WindowFlags) *Window {
 //	return sdlEnableScreenSaver()
 // }
 
-// func FlashWindow(window *Window, operation FlashOperation) bool {
-//	return sdlFlashWindow(window, operation)
-// }
+func FlashWindow(window *Window, operation FlashOperation) bool {
+	return sdlFlashWindow(window, operation)
+}
 
 // func GetClosestFullscreenDisplayMode(displayID DisplayID, w int32, h int32, refresh_rate float32, include_high_density_modes bool, closest *DisplayMode) bool {
 //	return sdlGetClosestFullscreenDisplayMode(displayID, w, h, refresh_rate, include_high_density_modes, closest)
 // }
 
-// func GetCurrentDisplayMode(displayID DisplayID) *DisplayMode {
-//	return sdlGetCurrentDisplayMode(displayID)
-// }
+func GetCurrentDisplayMode(displayID DisplayID) *DisplayMode {
+	return sdlGetCurrentDisplayMode(displayID)
+}
 
 // func GetCurrentDisplayOrientation(displayID DisplayID) DisplayOrientation {
 //	return sdlGetCurrentDisplayOrientation(displayID)
 // }
 
-// func GetCurrentVideoDriver() string {
-//	return sdlGetCurrentVideoDriver()
-// }
+func GetCurrentVideoDriver() string {
+	return sdlGetCurrentVideoDriver()
+}
 
 // func GetDesktopDisplayMode(displayID DisplayID) *DisplayMode {
 //	return sdlGetDesktopDisplayMode(displayID)
@@ -212,13 +226,13 @@ func GetDisplayContentScale(displayID DisplayID) float32 {
 //	return sdlGetDisplayForRect(rect)
 // }
 
-// func GetDisplayForWindow(window *Window) DisplayID {
-//	return sdlGetDisplayForWindow(window)
-// }
+func GetDisplayForWindow(window *Window) DisplayID {
+	return sdlGetDisplayForWindow(window)
+}
 
-// func GetDisplayName(displayID DisplayID) string {
-//	return sdlGetDisplayName(displayID)
-// }
+func GetDisplayName(displayID DisplayID) string {
+	return sdlGetDisplayName(displayID)
+}
 
 // func GetDisplayProperties(displayID DisplayID) PropertiesID {
 //	return sdlGetDisplayProperties(displayID)
@@ -362,9 +376,9 @@ func GetWindowSurface(window *Window) *Surface {
 //	return sdlGetWindowSurfaceVSync(window, vsync)
 // }
 
-// func GetWindowTitle(window *Window) string {
-//	return sdlGetWindowTitle(window)
-// }
+func GetWindowTitle(window *Window) string {
+	return sdlGetWindowTitle(window)
+}
 
 // func GL_CreateContext(window *Window) GLContext {
 //	return sdlGL_CreateContext(window)
@@ -540,9 +554,9 @@ func SetWindowSize(window *Window, w int32, h int32) bool {
 //	return sdlSetWindowSurfaceVSync(window, vsync)
 // }
 
-// func SetWindowTitle(window *Window, title string) bool {
-//	return sdlSetWindowTitle(window, title)
-// }
+func SetWindowTitle(window *Window, title string) bool {
+	return sdlSetWindowTitle(window, title)
+}
 
 // ShowWindow shows a window.
 func ShowWindow(window *Window) bool {
