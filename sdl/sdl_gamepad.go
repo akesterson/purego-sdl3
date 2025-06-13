@@ -1,5 +1,11 @@
 package sdl
 
+import (
+	"unsafe"
+
+	"github.com/jupiterrider/purego-sdl3/internal/mem"
+)
+
 type GamepadBindingType uint32
 
 const (
@@ -88,6 +94,45 @@ const (
 
 type Gamepad struct{}
 
+type GamepadBinding struct {
+	InputType  GamepadBindingType
+	input      [12]byte
+	OutputType GamepadBindingType
+	output     [12]byte
+}
+
+func (g *GamepadBinding) InputButton() int32 {
+	return *(*int32)(unsafe.Pointer(&g.input))
+}
+
+func (g *GamepadBinding) InputAxis() struct {
+	Axis             GamepadAxis
+	AxisMin, AxisMax int32
+} {
+	return *(*struct {
+		Axis             GamepadAxis
+		AxisMin, AxisMax int32
+	})(unsafe.Pointer(&g.input))
+}
+
+func (g *GamepadBinding) InputHat() struct{ Hat, HatMask int32 } {
+	return *(*struct{ Hat, HatMask int32 })(unsafe.Pointer(&g.input))
+}
+
+func (g *GamepadBinding) OutputButton() GamepadButton {
+	return *(*GamepadButton)(unsafe.Pointer(&g.output))
+}
+
+func (g *GamepadBinding) OutputAxis() struct {
+	Axis             GamepadAxis
+	AxisMin, AxisMax int32
+} {
+	return *(*struct {
+		Axis             GamepadAxis
+		AxisMin, AxisMax int32
+	})(unsafe.Pointer(&g.output))
+}
+
 // func AddGamepadMapping(mapping string) int32 {
 //	return sdlAddGamepadMapping(mapping)
 // }
@@ -100,9 +145,9 @@ type Gamepad struct{}
 //	return sdlAddGamepadMappingsFromIO(src, closeio)
 // }
 
-// func CloseGamepad(gamepad *Gamepad)  {
-//	sdlCloseGamepad(gamepad)
-// }
+func CloseGamepad(gamepad *Gamepad) {
+	sdlCloseGamepad(gamepad)
+}
 
 // func GamepadConnected(gamepad *Gamepad) bool {
 //	return sdlGamepadConnected(gamepad)
@@ -144,9 +189,18 @@ type Gamepad struct{}
 //	return sdlGetGamepadAxisFromString(str)
 // }
 
-// func GetGamepadBindings(gamepad *Gamepad, count *int32) **GamepadBinding {
-//	return sdlGetGamepadBindings(gamepad, count)
-// }
+// GetGamepadBindings returns the SDL joystick layer bindings for a gamepad or nil on failure.
+//
+// The returned slice must not be freed with e.g. [Free].
+func GetGamepadBindings(gamepad *Gamepad) []*GamepadBinding {
+	var count int32
+	bindings := sdlGetGamepadBindings(gamepad, &count)
+	if bindings == nil {
+		return nil
+	}
+	defer Free(unsafe.Pointer(bindings))
+	return mem.DeepCopy(bindings, count)
+}
 
 // func GetGamepadButton(gamepad *Gamepad, button GamepadButton) bool {
 //	return sdlGetGamepadButton(gamepad, button)
@@ -172,9 +226,9 @@ type Gamepad struct{}
 //	return sdlGetGamepadFirmwareVersion(gamepad)
 // }
 
-// func GetGamepadFromID(instance_id JoystickID) *Gamepad {
-//	return sdlGetGamepadFromID(instance_id)
-// }
+func GetGamepadFromID(instanceId JoystickID) *Gamepad {
+	return sdlGetGamepadFromID(instanceId)
+}
 
 // func GetGamepadFromPlayerIndex(player_index int32) *Gamepad {
 //	return sdlGetGamepadFromPlayerIndex(player_index)
@@ -208,13 +262,13 @@ type Gamepad struct{}
 //	return sdlGetGamepadMappings(count)
 // }
 
-// func GetGamepadName(gamepad *Gamepad) string {
-//	return sdlGetGamepadName(gamepad)
-// }
+func GetGamepadName(gamepad *Gamepad) string {
+	return sdlGetGamepadName(gamepad)
+}
 
-// func GetGamepadNameForID(instance_id JoystickID) string {
-//	return sdlGetGamepadNameForID(instance_id)
-// }
+func GetGamepadNameForID(instanceId JoystickID) string {
+	return sdlGetGamepadNameForID(instanceId)
+}
 
 // func GetGamepadPath(gamepad *Gamepad) string {
 //	return sdlGetGamepadPath(gamepad)
@@ -336,9 +390,9 @@ type Gamepad struct{}
 //	return sdlIsGamepad(instance_id)
 // }
 
-// func OpenGamepad(instance_id JoystickID) *Gamepad {
-//	return sdlOpenGamepad(instance_id)
-// }
+func OpenGamepad(instanceId JoystickID) *Gamepad {
+	return sdlOpenGamepad(instanceId)
+}
 
 // func ReloadGamepadMappings() bool {
 //	return sdlReloadGamepadMappings()

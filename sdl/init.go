@@ -86,8 +86,8 @@ var (
 	// sdlClickTrayEntry                        func(*TrayEntry)
 	// sdlCloseAsyncIO                          func(*AsyncIO, bool, *AsyncIOQueue, unsafe.Pointer) bool
 	// sdlCloseAudioDevice                      func(AudioDeviceID)
-	sdlCloseCamera func(*Camera)
-	// sdlCloseGamepad                          func(*Gamepad)
+	sdlCloseCamera  func(*Camera)
+	sdlCloseGamepad func(*Gamepad)
 	// sdlCloseHaptic                           func(*Haptic)
 	sdlCloseIO       func(*IOStream) bool
 	sdlCloseJoystick func(*Joystick)
@@ -317,14 +317,14 @@ var (
 	// sdlGetGamepadAppleSFSymbolsNameForButton func(*Gamepad, GamepadButton) string
 	// sdlGetGamepadAxis                        func(*Gamepad, GamepadAxis) int16
 	// sdlGetGamepadAxisFromString              func(string) GamepadAxis
-	// sdlGetGamepadBindings                    func(*Gamepad, *int32) **GamepadBinding
+	sdlGetGamepadBindings func(*Gamepad, *int32) **GamepadBinding
 	// sdlGetGamepadButton                      func(*Gamepad, GamepadButton) bool
 	// sdlGetGamepadButtonFromString            func(string) GamepadButton
 	// sdlGetGamepadButtonLabel                 func(*Gamepad, GamepadButton) GamepadButtonLabel
 	// sdlGetGamepadButtonLabelForType          func(GamepadType, GamepadButton) GamepadButtonLabel
 	// sdlGetGamepadConnectionState             func(*Gamepad) JoystickConnectionState
 	// sdlGetGamepadFirmwareVersion             func(*Gamepad) uint16
-	// sdlGetGamepadFromID                      func(JoystickID) *Gamepad
+	sdlGetGamepadFromID func(JoystickID) *Gamepad
 	// sdlGetGamepadFromPlayerIndex             func(int32) *Gamepad
 	// sdlGetGamepadGUIDForID                   func(JoystickID) GUID
 	// sdlGetGamepadID                          func(*Gamepad) JoystickID
@@ -333,8 +333,8 @@ var (
 	// sdlGetGamepadMappingForGUID              func(GUID) string
 	// sdlGetGamepadMappingForID                func(JoystickID) string
 	// sdlGetGamepadMappings                    func(*int32) **byte
-	// sdlGetGamepadName                        func(*Gamepad) string
-	// sdlGetGamepadNameForID                   func(JoystickID) string
+	sdlGetGamepadName      func(*Gamepad) string
+	sdlGetGamepadNameForID func(JoystickID) string
 	// sdlGetGamepadPath                        func(*Gamepad) string
 	// sdlGetGamepadPathForID                   func(JoystickID) string
 	// sdlGetGamepadPlayerIndex                 func(*Gamepad) int32
@@ -781,7 +781,7 @@ var (
 	// sdlOpenAudioDeviceStream                 func(AudioDeviceID, *AudioSpec, AudioStreamCallback, unsafe.Pointer) *AudioStream
 	sdlOpenCamera func(CameraID, *CameraSpec) *Camera
 	// sdlOpenFileStorage                       func(string) *Storage
-	// sdlOpenGamepad                           func(JoystickID) *Gamepad
+	sdlOpenGamepad func(JoystickID) *Gamepad
 	// sdlOpenHaptic                            func(HapticID) *Haptic
 	// sdlOpenHapticFromJoystick                func(*Joystick) *Haptic
 	// sdlOpenHapticFromMouse                   func() *Haptic
@@ -1314,7 +1314,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlCloseAsyncIO, lib, "SDL_CloseAsyncIO")
 	// purego.RegisterLibFunc(&sdlCloseAudioDevice, lib, "SDL_CloseAudioDevice")
 	purego.RegisterLibFunc(&sdlCloseCamera, lib, "SDL_CloseCamera")
-	// purego.RegisterLibFunc(&sdlCloseGamepad, lib, "SDL_CloseGamepad")
+	purego.RegisterLibFunc(&sdlCloseGamepad, lib, "SDL_CloseGamepad")
 	// purego.RegisterLibFunc(&sdlCloseHaptic, lib, "SDL_CloseHaptic")
 	purego.RegisterLibFunc(&sdlCloseIO, lib, "SDL_CloseIO")
 	purego.RegisterLibFunc(&sdlCloseJoystick, lib, "SDL_CloseJoystick")
@@ -1544,14 +1544,14 @@ func init() {
 	// purego.RegisterLibFunc(&sdlGetGamepadAppleSFSymbolsNameForButton, lib, "SDL_GetGamepadAppleSFSymbolsNameForButton")
 	// purego.RegisterLibFunc(&sdlGetGamepadAxis, lib, "SDL_GetGamepadAxis")
 	// purego.RegisterLibFunc(&sdlGetGamepadAxisFromString, lib, "SDL_GetGamepadAxisFromString")
-	// purego.RegisterLibFunc(&sdlGetGamepadBindings, lib, "SDL_GetGamepadBindings")
+	purego.RegisterLibFunc(&sdlGetGamepadBindings, lib, "SDL_GetGamepadBindings")
 	// purego.RegisterLibFunc(&sdlGetGamepadButton, lib, "SDL_GetGamepadButton")
 	// purego.RegisterLibFunc(&sdlGetGamepadButtonFromString, lib, "SDL_GetGamepadButtonFromString")
 	// purego.RegisterLibFunc(&sdlGetGamepadButtonLabel, lib, "SDL_GetGamepadButtonLabel")
 	// purego.RegisterLibFunc(&sdlGetGamepadButtonLabelForType, lib, "SDL_GetGamepadButtonLabelForType")
 	// purego.RegisterLibFunc(&sdlGetGamepadConnectionState, lib, "SDL_GetGamepadConnectionState")
 	// purego.RegisterLibFunc(&sdlGetGamepadFirmwareVersion, lib, "SDL_GetGamepadFirmwareVersion")
-	// purego.RegisterLibFunc(&sdlGetGamepadFromID, lib, "SDL_GetGamepadFromID")
+	purego.RegisterLibFunc(&sdlGetGamepadFromID, lib, "SDL_GetGamepadFromID")
 	// purego.RegisterLibFunc(&sdlGetGamepadFromPlayerIndex, lib, "SDL_GetGamepadFromPlayerIndex")
 	// purego.RegisterLibFunc(&sdlGetGamepadGUIDForID, lib, "SDL_GetGamepadGUIDForID")
 	// purego.RegisterLibFunc(&sdlGetGamepadID, lib, "SDL_GetGamepadID")
@@ -1560,8 +1560,8 @@ func init() {
 	// purego.RegisterLibFunc(&sdlGetGamepadMappingForGUID, lib, "SDL_GetGamepadMappingForGUID")
 	// purego.RegisterLibFunc(&sdlGetGamepadMappingForID, lib, "SDL_GetGamepadMappingForID")
 	// purego.RegisterLibFunc(&sdlGetGamepadMappings, lib, "SDL_GetGamepadMappings")
-	// purego.RegisterLibFunc(&sdlGetGamepadName, lib, "SDL_GetGamepadName")
-	// purego.RegisterLibFunc(&sdlGetGamepadNameForID, lib, "SDL_GetGamepadNameForID")
+	purego.RegisterLibFunc(&sdlGetGamepadName, lib, "SDL_GetGamepadName")
+	purego.RegisterLibFunc(&sdlGetGamepadNameForID, lib, "SDL_GetGamepadNameForID")
 	// purego.RegisterLibFunc(&sdlGetGamepadPath, lib, "SDL_GetGamepadPath")
 	// purego.RegisterLibFunc(&sdlGetGamepadPathForID, lib, "SDL_GetGamepadPathForID")
 	// purego.RegisterLibFunc(&sdlGetGamepadPlayerIndex, lib, "SDL_GetGamepadPlayerIndex")
@@ -2007,7 +2007,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlOpenAudioDeviceStream, lib, "SDL_OpenAudioDeviceStream")
 	purego.RegisterLibFunc(&sdlOpenCamera, lib, "SDL_OpenCamera")
 	// purego.RegisterLibFunc(&sdlOpenFileStorage, lib, "SDL_OpenFileStorage")
-	// purego.RegisterLibFunc(&sdlOpenGamepad, lib, "SDL_OpenGamepad")
+	purego.RegisterLibFunc(&sdlOpenGamepad, lib, "SDL_OpenGamepad")
 	// purego.RegisterLibFunc(&sdlOpenHaptic, lib, "SDL_OpenHaptic")
 	// purego.RegisterLibFunc(&sdlOpenHapticFromJoystick, lib, "SDL_OpenHapticFromJoystick")
 	// purego.RegisterLibFunc(&sdlOpenHapticFromMouse, lib, "SDL_OpenHapticFromMouse")
