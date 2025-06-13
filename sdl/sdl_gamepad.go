@@ -105,14 +105,8 @@ func (g *GamepadBinding) InputButton() int32 {
 	return *(*int32)(unsafe.Pointer(&g.input))
 }
 
-func (g *GamepadBinding) InputAxis() struct {
-	Axis             GamepadAxis
-	AxisMin, AxisMax int32
-} {
-	return *(*struct {
-		Axis             GamepadAxis
-		AxisMin, AxisMax int32
-	})(unsafe.Pointer(&g.input))
+func (g *GamepadBinding) InputAxis() struct{ Axis, AxisMin, AxisMax int32 } {
+	return *(*struct{ Axis, AxisMin, AxisMax int32 })(unsafe.Pointer(&g.input))
 }
 
 func (g *GamepadBinding) InputHat() struct{ Hat, HatMask int32 } {
