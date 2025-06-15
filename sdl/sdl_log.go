@@ -73,9 +73,9 @@ func LogError(category LogCategory, format string, a ...any) {
 //	sdlLogInfo(category, fmt)
 // }
 
-// func LogMessage(category int32, priority LogPriority, fmt string)  {
-//	sdlLogMessage(category, priority, fmt)
-// }
+func LogMessage(category LogCategory, priority LogPriority, format string, a ...any) {
+	sdlLogMessage(category, priority, fmt.Sprintf(format, a...))
+}
 
 // func LogMessageV(category int32, priority LogPriority, fmt string, ap va_list)  {
 //	sdlLogMessageV(category, priority, fmt, ap)

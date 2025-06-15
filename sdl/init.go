@@ -39,7 +39,7 @@ var (
 	// sdlatoi                                  func(string) int32
 	// sdlAttachVirtualJoystick                 func(*VirtualJoystickDesc) JoystickID
 	// sdlAudioDevicePaused                     func(AudioDeviceID) bool
-	// sdlAudioStreamDevicePaused               func(*AudioStream) bool
+	sdlAudioStreamDevicePaused uintptr
 	// sdlBeginGPUComputePass                   func(*GPUCommandBuffer, *GPUStorageTextureReadWriteBinding, uint32, *GPUStorageBufferReadWriteBinding, uint32) *GPUComputePass
 	// sdlBeginGPUCopyPass                      func(*GPUCommandBuffer) *GPUCopyPass
 	sdlBeginGPURenderPass func(*GPUCommandBuffer, *GPUColorTargetInfo, uint32, *GPUDepthStencilTargetInfo) *GPURenderPass
@@ -164,7 +164,7 @@ var (
 	sdlDelayNS func(uint64)
 	// sdlDelayPrecise                          func(uint64)
 	// sdlDestroyAsyncIOQueue                   func(*AsyncIOQueue)
-	// sdlDestroyAudioStream                    func(*AudioStream)
+	sdlDestroyAudioStream func(*AudioStream)
 	// sdlDestroyCondition                      func(*Condition)
 	sdlDestroyCursor func(*Cursor)
 	// sdlDestroyEnvironment                    func(*Environment)
@@ -260,7 +260,7 @@ var (
 	// sdlGetAudioStreamInputChannelMap         func(*AudioStream, *int32) *int32
 	// sdlGetAudioStreamOutputChannelMap        func(*AudioStream, *int32) *int32
 	// sdlGetAudioStreamProperties              func(*AudioStream) PropertiesID
-	// sdlGetAudioStreamQueued                  func(*AudioStream) int32
+	sdlGetAudioStreamQueued      uintptr
 	sdlGetBasePath               func() string
 	sdlGetBooleanProperty        func(PropertiesID, string, bool) bool
 	sdlGetCameraDriver           func(int32) string
@@ -719,7 +719,7 @@ var (
 	// sdlLoadFunction                          func(*SharedObject, string) FunctionPointer
 	// sdlLoadObject                            func(string) *SharedObject
 	// sdlLoadWAV                               func(string, *AudioSpec, **uint8, *uint32) bool
-	// sdlLoadWAV_IO                            func(*IOStream, bool, *AudioSpec, **uint8, *uint32) bool
+	sdlLoadWAVIO func(*IOStream, bool, *AudioSpec, **uint8, *uint32) bool
 	// sdlLockAudioStream                       func(*AudioStream) bool
 	sdlLockJoysticks func()
 	// sdlLockMutex                             func(*Mutex)
@@ -739,7 +739,7 @@ var (
 	sdlLogError func(LogCategory, string)
 	// sdllogf                                  func(float32) float32
 	// sdlLogInfo                               func(int32, string)
-	// sdlLogMessage                            func(int32, LogPriority, string)
+	sdlLogMessage func(LogCategory, LogPriority, string)
 	// sdlLogMessageV                           func(int32, LogPriority, string, va_list)
 	// sdlLogTrace                              func(int32, string)
 	// sdlLogVerbose                            func(int32, string)
@@ -778,8 +778,8 @@ var (
 	// sdlOnApplicationWillEnterForeground      func()
 	// sdlOnApplicationWillTerminate            func()
 	// sdlOpenAudioDevice                       func(AudioDeviceID, *AudioSpec) AudioDeviceID
-	// sdlOpenAudioDeviceStream                 func(AudioDeviceID, *AudioSpec, AudioStreamCallback, unsafe.Pointer) *AudioStream
-	sdlOpenCamera func(CameraID, *CameraSpec) *Camera
+	sdlOpenAudioDeviceStream func(AudioDeviceID, *AudioSpec, AudioStreamCallback, unsafe.Pointer) *AudioStream
+	sdlOpenCamera            func(CameraID, *CameraSpec) *Camera
 	// sdlOpenFileStorage                       func(string) *Storage
 	sdlOpenGamepad func(JoystickID) *Gamepad
 	// sdlOpenHaptic                            func(HapticID) *Haptic
@@ -794,7 +794,7 @@ var (
 	// sdlOpenUserStorage                       func(string, string, PropertiesID) *Storage
 	// sdlOutOfMemory                           func() bool
 	// sdlPauseAudioDevice                      func(AudioDeviceID) bool
-	// sdlPauseAudioStreamDevice                func(*AudioStream) bool
+	sdlPauseAudioStreamDevice uintptr
 	// sdlPauseHaptic                           func(*Haptic) bool
 	sdlPeepEvents func(*Event, int32, EventAction, EventType, EventType) int32
 	// sdlPlayHapticRumble                      func(*Haptic, float32, uint32) bool
@@ -810,7 +810,7 @@ var (
 	// sdlPushGPUDebugGroup                     func(*GPUCommandBuffer, string)
 	// sdlPushGPUFragmentUniformData            func(*GPUCommandBuffer, uint32, unsafe.Pointer, uint32)
 	// sdlPushGPUVertexUniformData              func(*GPUCommandBuffer, uint32, unsafe.Pointer, uint32)
-	// sdlPutAudioStreamData                    func(*AudioStream, unsafe.Pointer, int32) bool
+	sdlPutAudioStreamData uintptr
 	// sdlqsort                                 func(unsafe.Pointer, uint64, uint64, CompareCallback)
 	// sdlqsort_r                               func(unsafe.Pointer, uint64, uint64, CompareCallback_r, unsafe.Pointer)
 	// sdlQueryGPUFence                         func(*GPUDevice, *GPUFence) bool
@@ -897,7 +897,7 @@ var (
 	// sdlResetLogPriorities                    func()
 	sdlRestoreWindow func(*Window) bool
 	// sdlResumeAudioDevice                     func(AudioDeviceID) bool
-	// sdlResumeAudioStreamDevice               func(*AudioStream) bool
+	sdlResumeAudioStreamDevice uintptr
 	// sdlResumeHaptic                          func(*Haptic) bool
 	// sdlround                                 func(float64) float64
 	// sdlroundf                                func(float32) float32
@@ -1266,7 +1266,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlatoi, lib, "SDL_atoi")
 	// purego.RegisterLibFunc(&sdlAttachVirtualJoystick, lib, "SDL_AttachVirtualJoystick")
 	// purego.RegisterLibFunc(&sdlAudioDevicePaused, lib, "SDL_AudioDevicePaused")
-	// purego.RegisterLibFunc(&sdlAudioStreamDevicePaused, lib, "SDL_AudioStreamDevicePaused")
+	sdlAudioStreamDevicePaused = shared.Get(lib, "SDL_AudioStreamDevicePaused")
 	// purego.RegisterLibFunc(&sdlBeginGPUComputePass, lib, "SDL_BeginGPUComputePass")
 	// purego.RegisterLibFunc(&sdlBeginGPUCopyPass, lib, "SDL_BeginGPUCopyPass")
 	purego.RegisterLibFunc(&sdlBeginGPURenderPass, lib, "SDL_BeginGPURenderPass")
@@ -1391,7 +1391,7 @@ func init() {
 	purego.RegisterLibFunc(&sdlDelayNS, lib, "SDL_DelayNS")
 	// purego.RegisterLibFunc(&sdlDelayPrecise, lib, "SDL_DelayPrecise")
 	// purego.RegisterLibFunc(&sdlDestroyAsyncIOQueue, lib, "SDL_DestroyAsyncIOQueue")
-	// purego.RegisterLibFunc(&sdlDestroyAudioStream, lib, "SDL_DestroyAudioStream")
+	purego.RegisterLibFunc(&sdlDestroyAudioStream, lib, "SDL_DestroyAudioStream")
 	// purego.RegisterLibFunc(&sdlDestroyCondition, lib, "SDL_DestroyCondition")
 	purego.RegisterLibFunc(&sdlDestroyCursor, lib, "SDL_DestroyCursor")
 	// purego.RegisterLibFunc(&sdlDestroyEnvironment, lib, "SDL_DestroyEnvironment")
@@ -1487,7 +1487,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlGetAudioStreamInputChannelMap, lib, "SDL_GetAudioStreamInputChannelMap")
 	// purego.RegisterLibFunc(&sdlGetAudioStreamOutputChannelMap, lib, "SDL_GetAudioStreamOutputChannelMap")
 	// purego.RegisterLibFunc(&sdlGetAudioStreamProperties, lib, "SDL_GetAudioStreamProperties")
-	// purego.RegisterLibFunc(&sdlGetAudioStreamQueued, lib, "SDL_GetAudioStreamQueued")
+	sdlGetAudioStreamQueued = shared.Get(lib, "SDL_GetAudioStreamQueued")
 	purego.RegisterLibFunc(&sdlGetBasePath, lib, "SDL_GetBasePath")
 	purego.RegisterLibFunc(&sdlGetBooleanProperty, lib, "SDL_GetBooleanProperty")
 	purego.RegisterLibFunc(&sdlGetCameraDriver, lib, "SDL_GetCameraDriver")
@@ -1945,7 +1945,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlLoadFunction, lib, "SDL_LoadFunction")
 	// purego.RegisterLibFunc(&sdlLoadObject, lib, "SDL_LoadObject")
 	// purego.RegisterLibFunc(&sdlLoadWAV, lib, "SDL_LoadWAV")
-	// purego.RegisterLibFunc(&sdlLoadWAV_IO, lib, "SDL_LoadWAV_IO")
+	purego.RegisterLibFunc(&sdlLoadWAVIO, lib, "SDL_LoadWAV_IO")
 	// purego.RegisterLibFunc(&sdlLockAudioStream, lib, "SDL_LockAudioStream")
 	purego.RegisterLibFunc(&sdlLockJoysticks, lib, "SDL_LockJoysticks")
 	// purego.RegisterLibFunc(&sdlLockMutex, lib, "SDL_LockMutex")
@@ -1965,7 +1965,7 @@ func init() {
 	purego.RegisterLibFunc(&sdlLogError, lib, "SDL_LogError")
 	// purego.RegisterLibFunc(&sdllogf, lib, "SDL_logf")
 	// purego.RegisterLibFunc(&sdlLogInfo, lib, "SDL_LogInfo")
-	// purego.RegisterLibFunc(&sdlLogMessage, lib, "SDL_LogMessage")
+	purego.RegisterLibFunc(&sdlLogMessage, lib, "SDL_LogMessage")
 	// purego.RegisterLibFunc(&sdlLogMessageV, lib, "SDL_LogMessageV")
 	// purego.RegisterLibFunc(&sdlLogTrace, lib, "SDL_LogTrace")
 	// purego.RegisterLibFunc(&sdlLogVerbose, lib, "SDL_LogVerbose")
@@ -2004,7 +2004,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlOnApplicationWillEnterForeground, lib, "SDL_OnApplicationWillEnterForeground")
 	// purego.RegisterLibFunc(&sdlOnApplicationWillTerminate, lib, "SDL_OnApplicationWillTerminate")
 	// purego.RegisterLibFunc(&sdlOpenAudioDevice, lib, "SDL_OpenAudioDevice")
-	// purego.RegisterLibFunc(&sdlOpenAudioDeviceStream, lib, "SDL_OpenAudioDeviceStream")
+	purego.RegisterLibFunc(&sdlOpenAudioDeviceStream, lib, "SDL_OpenAudioDeviceStream")
 	purego.RegisterLibFunc(&sdlOpenCamera, lib, "SDL_OpenCamera")
 	// purego.RegisterLibFunc(&sdlOpenFileStorage, lib, "SDL_OpenFileStorage")
 	purego.RegisterLibFunc(&sdlOpenGamepad, lib, "SDL_OpenGamepad")
@@ -2020,7 +2020,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlOpenUserStorage, lib, "SDL_OpenUserStorage")
 	// purego.RegisterLibFunc(&sdlOutOfMemory, lib, "SDL_OutOfMemory")
 	// purego.RegisterLibFunc(&sdlPauseAudioDevice, lib, "SDL_PauseAudioDevice")
-	// purego.RegisterLibFunc(&sdlPauseAudioStreamDevice, lib, "SDL_PauseAudioStreamDevice")
+	sdlPauseAudioStreamDevice = shared.Get(lib, "SDL_PauseAudioStreamDevice")
 	// purego.RegisterLibFunc(&sdlPauseHaptic, lib, "SDL_PauseHaptic")
 	purego.RegisterLibFunc(&sdlPeepEvents, lib, "SDL_PeepEvents")
 	// purego.RegisterLibFunc(&sdlPlayHapticRumble, lib, "SDL_PlayHapticRumble")
@@ -2036,7 +2036,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlPushGPUDebugGroup, lib, "SDL_PushGPUDebugGroup")
 	// purego.RegisterLibFunc(&sdlPushGPUFragmentUniformData, lib, "SDL_PushGPUFragmentUniformData")
 	// purego.RegisterLibFunc(&sdlPushGPUVertexUniformData, lib, "SDL_PushGPUVertexUniformData")
-	// purego.RegisterLibFunc(&sdlPutAudioStreamData, lib, "SDL_PutAudioStreamData")
+	sdlPutAudioStreamData = shared.Get(lib, "SDL_PutAudioStreamData")
 	// purego.RegisterLibFunc(&sdlqsort, lib, "SDL_qsort")
 	// purego.RegisterLibFunc(&sdlqsort_r, lib, "SDL_qsort_r")
 	// purego.RegisterLibFunc(&sdlQueryGPUFence, lib, "SDL_QueryGPUFence")
@@ -2123,7 +2123,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlResetLogPriorities, lib, "SDL_ResetLogPriorities")
 	purego.RegisterLibFunc(&sdlRestoreWindow, lib, "SDL_RestoreWindow")
 	// purego.RegisterLibFunc(&sdlResumeAudioDevice, lib, "SDL_ResumeAudioDevice")
-	// purego.RegisterLibFunc(&sdlResumeAudioStreamDevice, lib, "SDL_ResumeAudioStreamDevice")
+	sdlResumeAudioStreamDevice = shared.Get(lib, "SDL_ResumeAudioStreamDevice")
 	// purego.RegisterLibFunc(&sdlResumeHaptic, lib, "SDL_ResumeHaptic")
 	// purego.RegisterLibFunc(&sdlround, lib, "SDL_round")
 	// purego.RegisterLibFunc(&sdlroundf, lib, "SDL_roundf")

@@ -1,5 +1,11 @@
 package sdl
 
+import (
+	"unsafe"
+
+	"github.com/ebitengine/purego"
+)
+
 type AudioFormat uint32
 
 const (
@@ -19,13 +25,38 @@ const (
 
 type AudioDeviceID uint32
 
+const (
+	AudioDeviceDefaultPlayback  AudioDeviceID = 0xFFFFFFFF
+	AudioDeviceDefaultRecording AudioDeviceID = 0xFFFFFFFE
+)
+
+type AudioSpec struct {
+	Format   AudioFormat
+	Channels int32
+	Freq     int32
+}
+
+type AudioStream struct{}
+
+type AudioStreamCallback uintptr
+
+func NewAudioStreamCallback(callback func(userdata unsafe.Pointer, stream *AudioStream, additionalAmount, totalAmount int32)) AudioStreamCallback {
+	cb := purego.NewCallback(func(userdata unsafe.Pointer, stream *AudioStream, additionalAmount, totalAmount int32) uintptr {
+		callback(userdata, stream, additionalAmount, totalAmount)
+		return 0
+	})
+
+	return AudioStreamCallback(cb)
+}
+
 // func AudioDevicePaused(dev AudioDeviceID) bool {
 //	return sdlAudioDevicePaused(dev)
 // }
 
-// func AudioStreamDevicePaused(stream *AudioStream) bool {
-//	return sdlAudioStreamDevicePaused(stream)
-// }
+func AudioStreamDevicePaused(stream *AudioStream) bool {
+	ret, _, _ := purego.SyscallN(sdlAudioStreamDevicePaused, uintptr(unsafe.Pointer(stream)))
+	return byte(ret) != 0
+}
 
 // func BindAudioStream(devid AudioDeviceID, stream *AudioStream) bool {
 //	return sdlBindAudioStream(devid, stream)
@@ -51,9 +82,9 @@ type AudioDeviceID uint32
 //	return sdlCreateAudioStream(src_spec, dst_spec)
 // }
 
-// func DestroyAudioStream(stream *AudioStream)  {
-//	sdlDestroyAudioStream(stream)
-// }
+func DestroyAudioStream(stream *AudioStream) {
+	sdlDestroyAudioStream(stream)
+}
 
 // func FlushAudioStream(stream *AudioStream) bool {
 //	return sdlFlushAudioStream(stream)
@@ -127,9 +158,10 @@ type AudioDeviceID uint32
 //	return sdlGetAudioStreamProperties(stream)
 // }
 
-// func GetAudioStreamQueued(stream *AudioStream) int32 {
-//	return sdlGetAudioStreamQueued(stream)
-// }
+func GetAudioStreamQueued(stream *AudioStream) int32 {
+	ret, _, _ := purego.SyscallN(sdlGetAudioStreamQueued, uintptr(unsafe.Pointer(stream)))
+	return int32(ret)
+}
 
 // func GetCurrentAudioDriver() string {
 //	return sdlGetCurrentAudioDriver()
@@ -155,9 +187,11 @@ type AudioDeviceID uint32
 //	return sdlLoadWAV(path, spec, audio_buf, audio_len)
 // }
 
-// func LoadWAV_IO(src *IOStream, closeio bool, spec *AudioSpec, audio_buf **uint8, audio_len *uint32) bool {
-//	return sdlLoadWAV_IO(src, closeio, spec, audio_buf, audio_len)
-// }
+// LoadWAVIO loads the audio data of a WAVE file into memory and returns true on success.
+// The data returned in audioBuf should be disposed with [Free] when it is no longer needed.
+func LoadWAVIO(src *IOStream, closeio bool, spec *AudioSpec, audioBuf **uint8, audioLen *uint32) bool {
+	return sdlLoadWAVIO(src, closeio, spec, audioBuf, audioLen)
+}
 
 // func LockAudioStream(stream *AudioStream) bool {
 //	return sdlLockAudioStream(stream)
@@ -171,29 +205,34 @@ type AudioDeviceID uint32
 //	return sdlOpenAudioDevice(devid, spec)
 // }
 
-// func OpenAudioDeviceStream(devid AudioDeviceID, spec *AudioSpec, callback AudioStreamCallback, userdata unsafe.Pointer) *AudioStream {
-//	return sdlOpenAudioDeviceStream(devid, spec, callback, userdata)
-// }
+// OpenAudioDeviceStream returns an audio stream on success, ready to use, or nil on failure.
+// When done with this stream, call [DestroyAudioStream] to free resources and close the device.
+func OpenAudioDeviceStream(devid AudioDeviceID, spec *AudioSpec, callback AudioStreamCallback, userdata unsafe.Pointer) *AudioStream {
+	return sdlOpenAudioDeviceStream(devid, spec, callback, userdata)
+}
 
 // func PauseAudioDevice(dev AudioDeviceID) bool {
 //	return sdlPauseAudioDevice(dev)
 // }
 
-// func PauseAudioStreamDevice(stream *AudioStream) bool {
-//	return sdlPauseAudioStreamDevice(stream)
-// }
+func PauseAudioStreamDevice(stream *AudioStream) bool {
+	ret, _, _ := purego.SyscallN(sdlPauseAudioStreamDevice, uintptr(unsafe.Pointer(stream)))
+	return byte(ret) != 0
+}
 
-// func PutAudioStreamData(stream *AudioStream, buf unsafe.Pointer, len int32) bool {
-//	return sdlPutAudioStreamData(stream, buf, len)
-// }
+func PutAudioStreamData(stream *AudioStream, buf *uint8, len int32) bool {
+	ret, _, _ := purego.SyscallN(sdlPutAudioStreamData, uintptr(unsafe.Pointer(stream)), uintptr(unsafe.Pointer(buf)), uintptr(len))
+	return byte(ret) != 0
+}
 
 // func ResumeAudioDevice(dev AudioDeviceID) bool {
 //	return sdlResumeAudioDevice(dev)
 // }
 
-// func ResumeAudioStreamDevice(stream *AudioStream) bool {
-//	return sdlResumeAudioStreamDevice(stream)
-// }
+func ResumeAudioStreamDevice(stream *AudioStream) bool {
+	ret, _, _ := purego.SyscallN(sdlResumeAudioStreamDevice, uintptr(unsafe.Pointer(stream)))
+	return byte(ret) != 0
+}
 
 // func SetAudioDeviceGain(devid AudioDeviceID, gain float32) bool {
 //	return sdlSetAudioDeviceGain(devid, gain)
