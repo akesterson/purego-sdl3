@@ -1,6 +1,10 @@
 package sdl
 
-import "unsafe"
+import (
+	"unsafe"
+
+	"github.com/jupiterrider/purego-sdl3/internal/mem"
+)
 
 type DisplayID uint32
 
@@ -238,17 +242,25 @@ func GetDisplayName(displayID DisplayID) string {
 //	return sdlGetDisplayProperties(displayID)
 // }
 
-// func GetDisplays(count *int32) *DisplayID {
-//	return sdlGetDisplays(count)
-// }
+// GetDisplays gets a list of currently connected displays.
+func GetDisplays() []DisplayID {
+	var count int32
+	displays := sdlGetDisplays(&count)
+	defer Free(unsafe.Pointer(displays))
+	return mem.Copy(displays, count)
+}
 
 // func GetDisplayUsableBounds(displayID DisplayID, rect *Rect) bool {
 //	return sdlGetDisplayUsableBounds(displayID, rect)
 // }
 
-// func GetFullscreenDisplayModes(displayID DisplayID, count *int32) **DisplayMode {
-//	return sdlGetFullscreenDisplayModes(displayID, count)
-// }
+// GetFullscreenDisplayModes gets a list of fullscreen display modes available on a display, or nil on error.
+func GetFullscreenDisplayModes(displayID DisplayID) []*DisplayMode {
+	var count int32
+	displayModes := sdlGetFullscreenDisplayModes(displayID, &count)
+	defer Free(unsafe.Pointer(displayModes))
+	return mem.DeepCopy(displayModes, count)
+}
 
 // func GetGrabbedWindow() *Window {
 //	return sdlGetGrabbedWindow()
@@ -258,9 +270,10 @@ func GetDisplayName(displayID DisplayID) string {
 //	return sdlGetNaturalDisplayOrientation(displayID)
 // }
 
-// func GetNumVideoDrivers() int32 {
-//	return sdlGetNumVideoDrivers()
-// }
+// GetNumVideoDrivers gets the number of video drivers compiled into SDL.
+func GetNumVideoDrivers() int32 {
+	return sdlGetNumVideoDrivers()
+}
 
 func GetPrimaryDisplay() DisplayID {
 	return sdlGetPrimaryDisplay()
@@ -270,9 +283,10 @@ func GetPrimaryDisplay() DisplayID {
 //	return sdlGetSystemTheme()
 // }
 
-// func GetVideoDriver(index int32) string {
-//	return sdlGetVideoDriver(index)
-// }
+// GetVideoDriver gets the name of a built in video driver.
+func GetVideoDriver(index int32) string {
+	return sdlGetVideoDriver(index)
+}
 
 // func GetWindowAspectRatio(window *Window, min_aspect *float32, max_aspect *float32) bool {
 //	return sdlGetWindowAspectRatio(window, min_aspect, max_aspect)
@@ -294,9 +308,10 @@ func GetWindowDisplayScale(window *Window) float32 {
 //	return sdlGetWindowFromID(id)
 // }
 
-// func GetWindowFullscreenMode(window *Window) *DisplayMode {
-//	return sdlGetWindowFullscreenMode(window)
-// }
+// GetWindowFullscreenMode queries the display mode to use when a window is visible at fullscreen.
+func GetWindowFullscreenMode(window *Window) *DisplayMode {
+	return sdlGetWindowFullscreenMode(window)
+}
 
 // func GetWindowICCProfile(window *Window, size *uint64) unsafe.Pointer {
 //	return sdlGetWindowICCProfile(window, size)
@@ -307,9 +322,10 @@ func GetWindowID(window *Window) WindowID {
 	return sdlGetWindowID(window)
 }
 
-// func GetWindowKeyboardGrab(window *Window) bool {
-//	return sdlGetWindowKeyboardGrab(window)
-// }
+// GetWindowKeyboardGrab returns true if keyboard is grabbed, and false otherwise.
+func GetWindowKeyboardGrab(window *Window) bool {
+	return sdlGetWindowKeyboardGrab(window)
+}
 
 // func GetWindowMaximumSize(window *Window, w *int32, h *int32) bool {
 //	return sdlGetWindowMaximumSize(window, w, h)
@@ -319,17 +335,19 @@ func GetWindowID(window *Window) WindowID {
 //	return sdlGetWindowMinimumSize(window, w, h)
 // }
 
-// func GetWindowMouseGrab(window *Window) bool {
-//	return sdlGetWindowMouseGrab(window)
-// }
+// GetWindowMouseGrab returns true if mouse is grabbed, and false otherwise.
+func GetWindowMouseGrab(window *Window) bool {
+	return sdlGetWindowMouseGrab(window)
+}
 
 // func GetWindowMouseRect(window *Window) *Rect {
 //	return sdlGetWindowMouseRect(window)
 // }
 
-// func GetWindowOpacity(window *Window) float32 {
-//	return sdlGetWindowOpacity(window)
-// }
+// GetWindowOpacity gets the opacity of a window.
+func GetWindowOpacity(window *Window) float32 {
+	return sdlGetWindowOpacity(window)
+}
 
 // func GetWindowParent(window *Window) *Window {
 //	return sdlGetWindowParent(window)
@@ -466,29 +484,34 @@ func RestoreWindow(window *Window) bool {
 //	return sdlScreenSaverEnabled()
 // }
 
-// func SetWindowAlwaysOnTop(window *Window, on_top bool) bool {
-//	return sdlSetWindowAlwaysOnTop(window, on_top)
-// }
+// SetWindowAlwaysOnTop sets the window to always be above the others.
+func SetWindowAlwaysOnTop(window *Window, onTop bool) bool {
+	return sdlSetWindowAlwaysOnTop(window, onTop)
+}
 
 // func SetWindowAspectRatio(window *Window, min_aspect float32, max_aspect float32) bool {
 //	return sdlSetWindowAspectRatio(window, min_aspect, max_aspect)
 // }
 
-// func SetWindowBordered(window *Window, bordered bool) bool {
-//	return sdlSetWindowBordered(window, bordered)
-// }
+// SetWindowBordered sets the border state of a window.
+func SetWindowBordered(window *Window, bordered bool) bool {
+	return sdlSetWindowBordered(window, bordered)
+}
 
-// func SetWindowFocusable(window *Window, focusable bool) bool {
-//	return sdlSetWindowFocusable(window, focusable)
-// }
+// SetWindowFocusable sets whether the window may have input focus.
+func SetWindowFocusable(window *Window, focusable bool) bool {
+	return sdlSetWindowFocusable(window, focusable)
+}
 
-// func SetWindowFullscreen(window *Window, fullscreen bool) bool {
-//	return sdlSetWindowFullscreen(window, fullscreen)
-// }
+// SetWindowFullscreen requests that the window's fullscreen state be changed.
+func SetWindowFullscreen(window *Window, fullscreen bool) bool {
+	return sdlSetWindowFullscreen(window, fullscreen)
+}
 
-// func SetWindowFullscreenMode(window *Window, mode *DisplayMode) bool {
-//	return sdlSetWindowFullscreenMode(window, mode)
-// }
+// SetWindowFullscreenMode sets the display mode to use when a window is visible and fullscreen.
+func SetWindowFullscreenMode(window *Window, mode *DisplayMode) bool {
+	return sdlSetWindowFullscreenMode(window, mode)
+}
 
 func SetWindowHitTest(window *Window, callback HitTest, callbackData unsafe.Pointer) bool {
 	wrapper := func(win *Window, point *Point, data unsafe.Pointer) uintptr {
@@ -502,9 +525,11 @@ func SetWindowIcon(window *Window, icon *Surface) bool {
 	return sdlSetWindowIcon(window, icon)
 }
 
-// func SetWindowKeyboardGrab(window *Window, grabbed bool) bool {
-//	return sdlSetWindowKeyboardGrab(window, grabbed)
-// }
+// SetWindowKeyboardGrab enables capture of system keyboard shortcuts like Alt+Tab or the Meta/Super key.
+// Note that not all system keyboard shortcuts can be captured by applications (one example is Ctrl+Alt+Del on Windows).
+func SetWindowKeyboardGrab(window *Window, grabbed bool) bool {
+	return sdlSetWindowKeyboardGrab(window, grabbed)
+}
 
 // func SetWindowMaximumSize(window *Window, max_w int32, max_h int32) bool {
 //	return sdlSetWindowMaximumSize(window, max_w, max_h)
@@ -518,17 +543,19 @@ func SetWindowIcon(window *Window, icon *Surface) bool {
 //	return sdlSetWindowModal(window, modal)
 // }
 
-// func SetWindowMouseGrab(window *Window, grabbed bool) bool {
-//	return sdlSetWindowMouseGrab(window, grabbed)
-// }
+// SetWindowMouseGrab enables restriction of the mouse cursor to the window.
+func SetWindowMouseGrab(window *Window, grabbed bool) bool {
+	return sdlSetWindowMouseGrab(window, grabbed)
+}
 
 // func SetWindowMouseRect(window *Window, rect *Rect) bool {
 //	return sdlSetWindowMouseRect(window, rect)
 // }
 
-// func SetWindowOpacity(window *Window, opacity float32) bool {
-//	return sdlSetWindowOpacity(window, opacity)
-// }
+// SetWindowOpacity sets the opacity for a window.
+func SetWindowOpacity(window *Window, opacity float32) bool {
+	return sdlSetWindowOpacity(window, opacity)
+}
 
 // func SetWindowParent(window *Window, parent *Window) bool {
 //	return sdlSetWindowParent(window, parent)
@@ -538,9 +565,10 @@ func SetWindowPosition(window *Window, x int32, y int32) bool {
 	return sdlSetWindowPosition(window, x, y)
 }
 
-// func SetWindowResizable(window *Window, resizable bool) bool {
-//	return sdlSetWindowResizable(window, resizable)
-// }
+// SetWindowResizable sets the user-resizable state of a window.
+func SetWindowResizable(window *Window, resizable bool) bool {
+	return sdlSetWindowResizable(window, resizable)
+}
 
 // func SetWindowShape(window *Window, shape *Surface) bool {
 //	return sdlSetWindowShape(window, shape)
