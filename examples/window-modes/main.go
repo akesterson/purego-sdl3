@@ -29,16 +29,18 @@ func main() {
 	defer sdl.DestroyWindow(window)
 
 	fmt.Println("Available display IDs:", sdl.GetDisplays())
-	var i int32
+
 	videoDriversCount := sdl.GetNumVideoDrivers()
 	fmt.Print("Available video drivers: ")
-	for ; i < videoDriversCount; i++ {
+	for i := int32(0); i < videoDriversCount; i++ {
 		fmt.Print(sdl.GetVideoDriver(i))
-		if i > 0 && i < sdl.GetNumVideoDrivers()-1 {
+		if i < videoDriversCount-1 {
 			fmt.Print(", ")
 		}
 	}
-	fmt.Println("")
+	fmt.Println()
+
+	fmt.Printf("Video driver in use: %s\r\n", sdl.GetCurrentVideoDriver())
 
 	// Get available fullscreen display modes
 	fullscreenDisplayModes := sdl.GetFullscreenDisplayModes(sdl.GetDisplayForWindow(window))
