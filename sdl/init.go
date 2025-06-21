@@ -409,14 +409,13 @@ var (
 	sdlGetJoystickTypeForID           func(JoystickID) JoystickType
 	sdlGetJoystickVendor              func(*Joystick) uint16
 	sdlGetJoystickVendorForID         func(JoystickID) uint16
-
-	sdlGetKeyboardFocus     func() *Window
-	sdlGetKeyboardNameForID func(KeyboardID) string
-	sdlGetKeyboards         func(*int32) *KeyboardID
-	sdlGetKeyboardState     func(*int32) *bool
-	sdlGetKeyFromName       func(string) Keycode
-	sdlGetKeyFromScancode   func(Scancode, Keymod, bool) Keycode
-	sdlGetKeyName           func(Keycode) string
+	sdlGetKeyboardFocus               func() *Window
+	sdlGetKeyboardNameForID           func(KeyboardID) string
+	sdlGetKeyboards                   func(*int32) *KeyboardID
+	sdlGetKeyboardState               func(*int32) *bool
+	sdlGetKeyFromName                 func(string) Keycode
+	sdlGetKeyFromScancode             func(Scancode, Keymod, bool) Keycode
+	sdlGetKeyName                     func(Keycode) string
 	// sdlGetLogOutputFunction                  func(*LogOutputFunction, *unsafe.Pointer)
 	// sdlGetLogPriority                        func(int32) LogPriority
 	// sdlGetMasksForPixelFormat                func(PixelFormat, *int32, *uint32, *uint32, *uint32, *uint32) bool
