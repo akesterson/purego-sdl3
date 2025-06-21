@@ -82,7 +82,7 @@ func GetCameraSupportedFormats(instanceId CameraID) []*CameraSpec {
 		return nil
 	}
 	defer Free(unsafe.Pointer(formats))
-	return mem.Copy(formats, count)
+	return mem.DeepCopy(formats, count)
 }
 
 // GetCurrentCameraDriver returns the name of the current camera driver or "" if no driver has been initialized.

@@ -454,7 +454,7 @@ var (
 	// sdlGetPlatform                           func() string
 	sdlGetPointerProperty  func(PropertiesID, string, unsafe.Pointer) unsafe.Pointer
 	sdlGetPowerInfo        func(*int32, *int32) PowerState
-	sdlGetPreferredLocales func(*int32) **Locale
+	sdlGetPreferredLocales func(*int32) **struct{ language, country *byte }
 	// sdlGetPrefPath                           func(string, string) string
 	sdlGetPrimaryDisplay func() DisplayID
 	// sdlGetPrimarySelectionText               func() string
@@ -1239,7 +1239,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlabs, lib, "SDL_abs")
 	// purego.RegisterLibFunc(&sdlacos, lib, "SDL_acos")
 	// purego.RegisterLibFunc(&sdlacosf, lib, "SDL_acosf")
-	// purego.RegisterLibFunc(&sdlAcquireCameraFrame, lib, "SDL_AcquireCameraFrame")
+	purego.RegisterLibFunc(&sdlAcquireCameraFrame, lib, "SDL_AcquireCameraFrame")
 	purego.RegisterLibFunc(&sdlAcquireGPUCommandBuffer, lib, "SDL_AcquireGPUCommandBuffer")
 	purego.RegisterLibFunc(&sdlAcquireGPUSwapchainTexture, lib, "SDL_AcquireGPUSwapchainTexture")
 	// purego.RegisterLibFunc(&sdlAddAtomicInt, lib, "SDL_AddAtomicInt")

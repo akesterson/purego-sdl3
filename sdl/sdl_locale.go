@@ -4,19 +4,10 @@ import (
 	"unsafe"
 
 	"github.com/jupiterrider/purego-sdl3/internal/convert"
-	"github.com/jupiterrider/purego-sdl3/internal/mem"
 )
 
 type Locale struct {
-	language, country *byte
-}
-
-func (l *Locale) Language() string {
-	return convert.ToString(l.language)
-}
-
-func (l *Locale) Country() string {
-	return convert.ToString(l.country)
+	Language, Country string
 }
 
 // GetPreferredLocales reports the user's preferred locale.
@@ -27,5 +18,15 @@ func GetPreferredLocales() []*Locale {
 		return nil
 	}
 	defer Free(unsafe.Pointer(locales))
-	return mem.Copy(locales, count)
+
+	result := make([]*Locale, count)
+
+	for i, v := range unsafe.Slice(locales, count) {
+		locale := new(Locale)
+		locale.Language = convert.ToString(v.language)
+		locale.Country = convert.ToString(v.country)
+		result[i] = locale
+	}
+
+	return result
 }
