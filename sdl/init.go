@@ -219,9 +219,9 @@ var (
 	sdlFlipSurface  func(*Surface, FlipMode) bool
 	// sdlfloor                                 func(float64) float64
 	// sdlfloorf                                func(float32) float32
-	// sdlFlushAudioStream                      func(*AudioStream) bool
-	sdlFlushEvent  func(EventType)
-	sdlFlushEvents func(EventType, EventType)
+	sdlFlushAudioStream uintptr
+	sdlFlushEvent       func(EventType)
+	sdlFlushEvents      func(EventType, EventType)
 	// sdlFlushIO                               func(*IOStream) bool
 	sdlFlushRenderer uintptr
 	// sdlfmod                                  func(float64, float64) float64
@@ -247,7 +247,7 @@ var (
 	// sdlGetAudioDeviceFormat                  func(AudioDeviceID, *AudioSpec, *int32) bool
 	// sdlGetAudioDeviceGain                    func(AudioDeviceID) float32
 	// sdlGetAudioDeviceName                    func(AudioDeviceID) string
-	// sdlGetAudioDriver                        func(int32) string
+	sdlGetAudioDriver func(int32) string
 	// sdlGetAudioFormatName                    func(AudioFormat) string
 	// sdlGetAudioPlaybackDevices               func(*int32) *AudioDeviceID
 	// sdlGetAudioRecordingDevices              func(*int32) *AudioDeviceID
@@ -277,7 +277,7 @@ var (
 	sdlGetClipboardText func() *byte
 	// sdlGetClosestFullscreenDisplayMode       func(DisplayID, int32, int32, float32, bool, *DisplayMode) bool
 	// sdlGetCPUCacheLineSize                   func() int32
-	// sdlGetCurrentAudioDriver                 func() string
+	sdlGetCurrentAudioDriver  func() string
 	sdlGetCurrentCameraDriver func() string
 	// sdlGetCurrentDirectory                   func() string
 	sdlGetCurrentDisplayMode func(DisplayID) *DisplayMode
@@ -430,7 +430,7 @@ var (
 	sdlGetMouseState     func(*float32, *float32) MouseButtonFlags
 	// sdlGetNaturalDisplayOrientation          func(DisplayID) DisplayOrientation
 	// sdlGetNumAllocations                     func() int32
-	// sdlGetNumAudioDrivers                    func() int32
+	sdlGetNumAudioDrivers  func() int32
 	sdlGetNumberProperty   func(PropertiesID, string, int64) int64
 	sdlGetNumCameraDrivers func() int32
 	// sdlGetNumGamepadTouchpadFingers          func(*Gamepad, int32) int32
@@ -1040,7 +1040,7 @@ var (
 	// sdlSetWindowParent                       func(*Window, *Window) bool
 	sdlSetWindowPosition          func(*Window, int32, int32) bool
 	sdlSetWindowRelativeMouseMode func(*Window, bool) bool
-	sdlSetWindowResizable                    func(*Window, bool) bool
+	sdlSetWindowResizable         func(*Window, bool) bool
 	// sdlSetWindowShape                        func(*Window, *Surface) bool
 	sdlSetWindowSize func(*Window, int32, int32) bool
 	// sdlSetWindowSurfaceVSync                 func(*Window, int32) bool
@@ -1446,7 +1446,7 @@ func init() {
 	purego.RegisterLibFunc(&sdlFlipSurface, lib, "SDL_FlipSurface")
 	// purego.RegisterLibFunc(&sdlfloor, lib, "SDL_floor")
 	// purego.RegisterLibFunc(&sdlfloorf, lib, "SDL_floorf")
-	// purego.RegisterLibFunc(&sdlFlushAudioStream, lib, "SDL_FlushAudioStream")
+	sdlFlushAudioStream = shared.Get(lib, "SDL_FlushAudioStream")
 	purego.RegisterLibFunc(&sdlFlushEvent, lib, "SDL_FlushEvent")
 	purego.RegisterLibFunc(&sdlFlushEvents, lib, "SDL_FlushEvents")
 	// purego.RegisterLibFunc(&sdlFlushIO, lib, "SDL_FlushIO")
@@ -1474,7 +1474,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlGetAudioDeviceFormat, lib, "SDL_GetAudioDeviceFormat")
 	// purego.RegisterLibFunc(&sdlGetAudioDeviceGain, lib, "SDL_GetAudioDeviceGain")
 	// purego.RegisterLibFunc(&sdlGetAudioDeviceName, lib, "SDL_GetAudioDeviceName")
-	// purego.RegisterLibFunc(&sdlGetAudioDriver, lib, "SDL_GetAudioDriver")
+	purego.RegisterLibFunc(&sdlGetAudioDriver, lib, "SDL_GetAudioDriver")
 	// purego.RegisterLibFunc(&sdlGetAudioFormatName, lib, "SDL_GetAudioFormatName")
 	// purego.RegisterLibFunc(&sdlGetAudioPlaybackDevices, lib, "SDL_GetAudioPlaybackDevices")
 	// purego.RegisterLibFunc(&sdlGetAudioRecordingDevices, lib, "SDL_GetAudioRecordingDevices")
@@ -1504,7 +1504,7 @@ func init() {
 	purego.RegisterLibFunc(&sdlGetClipboardText, lib, "SDL_GetClipboardText")
 	// purego.RegisterLibFunc(&sdlGetClosestFullscreenDisplayMode, lib, "SDL_GetClosestFullscreenDisplayMode")
 	// purego.RegisterLibFunc(&sdlGetCPUCacheLineSize, lib, "SDL_GetCPUCacheLineSize")
-	// purego.RegisterLibFunc(&sdlGetCurrentAudioDriver, lib, "SDL_GetCurrentAudioDriver")
+	purego.RegisterLibFunc(&sdlGetCurrentAudioDriver, lib, "SDL_GetCurrentAudioDriver")
 	purego.RegisterLibFunc(&sdlGetCurrentCameraDriver, lib, "SDL_GetCurrentCameraDriver")
 	// purego.RegisterLibFunc(&sdlGetCurrentDirectory, lib, "SDL_GetCurrentDirectory")
 	purego.RegisterLibFunc(&sdlGetCurrentDisplayMode, lib, "SDL_GetCurrentDisplayMode")
@@ -1656,7 +1656,7 @@ func init() {
 	purego.RegisterLibFunc(&sdlGetMouseState, lib, "SDL_GetMouseState")
 	// purego.RegisterLibFunc(&sdlGetNaturalDisplayOrientation, lib, "SDL_GetNaturalDisplayOrientation")
 	// purego.RegisterLibFunc(&sdlGetNumAllocations, lib, "SDL_GetNumAllocations")
-	// purego.RegisterLibFunc(&sdlGetNumAudioDrivers, lib, "SDL_GetNumAudioDrivers")
+	purego.RegisterLibFunc(&sdlGetNumAudioDrivers, lib, "SDL_GetNumAudioDrivers")
 	purego.RegisterLibFunc(&sdlGetNumberProperty, lib, "SDL_GetNumberProperty")
 	purego.RegisterLibFunc(&sdlGetNumCameraDrivers, lib, "SDL_GetNumCameraDrivers")
 	// purego.RegisterLibFunc(&sdlGetNumGamepadTouchpadFingers, lib, "SDL_GetNumGamepadTouchpadFingers")

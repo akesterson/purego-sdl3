@@ -86,9 +86,12 @@ func DestroyAudioStream(stream *AudioStream) {
 	sdlDestroyAudioStream(stream)
 }
 
-// func FlushAudioStream(stream *AudioStream) bool {
-//	return sdlFlushAudioStream(stream)
-// }
+// FlushAudioStream tells the stream that you're done sending data,
+// and anything being buffered should be converted/resampled and made available immediately.
+func FlushAudioStream(stream *AudioStream) bool {
+	ret, _, _ := purego.SyscallN(sdlFlushAudioStream, uintptr(unsafe.Pointer(stream)))
+	return byte(ret) != 0
+}
 
 // func GetAudioDeviceChannelMap(devid AudioDeviceID, count *int32) *int32 {
 //	return sdlGetAudioDeviceChannelMap(devid, count)
@@ -106,9 +109,9 @@ func DestroyAudioStream(stream *AudioStream) {
 //	return sdlGetAudioDeviceName(devid)
 // }
 
-// func GetAudioDriver(index int32) string {
-//	return sdlGetAudioDriver(index)
-// }
+func GetAudioDriver(index int32) string {
+	return sdlGetAudioDriver(index)
+}
 
 // func GetAudioFormatName(format AudioFormat) string {
 //	return sdlGetAudioFormatName(format)
@@ -163,13 +166,13 @@ func GetAudioStreamQueued(stream *AudioStream) int32 {
 	return int32(ret)
 }
 
-// func GetCurrentAudioDriver() string {
-//	return sdlGetCurrentAudioDriver()
-// }
+func GetCurrentAudioDriver() string {
+	return sdlGetCurrentAudioDriver()
+}
 
-// func GetNumAudioDrivers() int32 {
-//	return sdlGetNumAudioDrivers()
-// }
+func GetNumAudioDrivers() int32 {
+	return sdlGetNumAudioDrivers()
+}
 
 // func GetSilenceValueForFormat(format AudioFormat) int32 {
 //	return sdlGetSilenceValueForFormat(format)
