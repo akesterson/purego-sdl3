@@ -66,9 +66,10 @@ func AudioStreamDevicePaused(stream *AudioStream) bool {
 //	return sdlBindAudioStreams(devid, streams, num_streams)
 // }
 
-// func ClearAudioStream(stream *AudioStream) bool {
-//	return sdlClearAudioStream(stream)
-// }
+func ClearAudioStream(stream *AudioStream) bool {
+	ret, _, _ := purego.SyscallN(sdlClearAudioStream, uintptr(unsafe.Pointer(stream)))
+	return byte(ret) != 0
+}
 
 // func CloseAudioDevice(devid AudioDeviceID)  {
 //	sdlCloseAudioDevice(devid)

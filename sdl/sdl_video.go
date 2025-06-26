@@ -194,9 +194,9 @@ func FlashWindow(window *Window, operation FlashOperation) bool {
 	return sdlFlashWindow(window, operation)
 }
 
-// func GetClosestFullscreenDisplayMode(displayID DisplayID, w int32, h int32, refresh_rate float32, include_high_density_modes bool, closest *DisplayMode) bool {
-//	return sdlGetClosestFullscreenDisplayMode(displayID, w, h, refresh_rate, include_high_density_modes, closest)
-// }
+func GetClosestFullscreenDisplayMode(displayID DisplayID, w int32, h int32, refreshRate float32, includeHighDensityModes bool, closest *DisplayMode) bool {
+	return sdlGetClosestFullscreenDisplayMode(displayID, w, h, refreshRate, includeHighDensityModes, closest)
+}
 
 func GetCurrentDisplayMode(displayID DisplayID) *DisplayMode {
 	return sdlGetCurrentDisplayMode(displayID)

@@ -77,7 +77,7 @@ var (
 	// sdlceilf                                 func(float32) float32
 	sdlClaimWindowForGPUDevice func(*GPUDevice, *Window) bool
 	// sdlCleanupTLS                            func()
-	// sdlClearAudioStream                      func(*AudioStream) bool
+	sdlClearAudioStream uintptr
 	// sdlClearClipboardData                    func() bool
 	sdlClearComposition func(*Window) bool
 	sdlClearError       func() bool
@@ -274,8 +274,8 @@ var (
 	sdlGetCameraSupportedFormats func(CameraID, *int32) **CameraSpec
 	// sdlGetClipboardData                      func(string, *uint64) unsafe.Pointer
 	// sdlGetClipboardMimeTypes                 func(*uint64) **byte
-	sdlGetClipboardText func() *byte
-	// sdlGetClosestFullscreenDisplayMode       func(DisplayID, int32, int32, float32, bool, *DisplayMode) bool
+	sdlGetClipboardText                func() *byte
+	sdlGetClosestFullscreenDisplayMode func(DisplayID, int32, int32, float32, bool, *DisplayMode) bool
 	// sdlGetCPUCacheLineSize                   func() int32
 	sdlGetCurrentAudioDriver  func() string
 	sdlGetCurrentCameraDriver func() string
@@ -1303,7 +1303,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlceilf, lib, "SDL_ceilf")
 	purego.RegisterLibFunc(&sdlClaimWindowForGPUDevice, lib, "SDL_ClaimWindowForGPUDevice")
 	// purego.RegisterLibFunc(&sdlCleanupTLS, lib, "SDL_CleanupTLS")
-	// purego.RegisterLibFunc(&sdlClearAudioStream, lib, "SDL_ClearAudioStream")
+	sdlClearAudioStream = shared.Get(lib, "SDL_ClearAudioStream")
 	// purego.RegisterLibFunc(&sdlClearClipboardData, lib, "SDL_ClearClipboardData")
 	purego.RegisterLibFunc(&sdlClearComposition, lib, "SDL_ClearComposition")
 	purego.RegisterLibFunc(&sdlClearError, lib, "SDL_ClearError")
@@ -1501,7 +1501,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlGetClipboardData, lib, "SDL_GetClipboardData")
 	// purego.RegisterLibFunc(&sdlGetClipboardMimeTypes, lib, "SDL_GetClipboardMimeTypes")
 	purego.RegisterLibFunc(&sdlGetClipboardText, lib, "SDL_GetClipboardText")
-	// purego.RegisterLibFunc(&sdlGetClosestFullscreenDisplayMode, lib, "SDL_GetClosestFullscreenDisplayMode")
+	purego.RegisterLibFunc(&sdlGetClosestFullscreenDisplayMode, lib, "SDL_GetClosestFullscreenDisplayMode")
 	// purego.RegisterLibFunc(&sdlGetCPUCacheLineSize, lib, "SDL_GetCPUCacheLineSize")
 	purego.RegisterLibFunc(&sdlGetCurrentAudioDriver, lib, "SDL_GetCurrentAudioDriver")
 	purego.RegisterLibFunc(&sdlGetCurrentCameraDriver, lib, "SDL_GetCurrentCameraDriver")
