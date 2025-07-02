@@ -82,9 +82,9 @@ func LoadFile(file string, dataSize *uint64) unsafe.Pointer {
 //	return sdlOpenIO(iface, userdata)
 // }
 
-// func ReadIO(context *IOStream, ptr unsafe.Pointer, size uint64) uint64 {
-//	return sdlReadIO(context, ptr, size)
-// }
+func ReadIO(context *IOStream, ptr unsafe.Pointer, size uint64) uint64 {
+	return sdlReadIO(context, ptr, size)
+}
 
 // func ReadS16BE(src *IOStream, value *int16) bool {
 //	return sdlReadS16BE(src, value)

@@ -823,7 +823,7 @@ var (
 	// sdlrandf                                 func() float32
 	// sdlrandf_r                               func(*uint64) float32
 	// sdlReadAsyncIO                           func(*AsyncIO, unsafe.Pointer, uint64, uint64, *AsyncIOQueue, unsafe.Pointer) bool
-	// sdlReadIO                                func(*IOStream, unsafe.Pointer, uint64) uint64
+	sdlReadIO                                func(*IOStream, unsafe.Pointer, uint64) uint64
 	// sdlReadProcess                           func(*Process, *uint64, *int32) unsafe.Pointer
 	// sdlReadS16BE                             func(*IOStream, *int16) bool
 	// sdlReadS16LE                             func(*IOStream, *int16) bool
@@ -2049,7 +2049,7 @@ func init() {
 	// purego.RegisterLibFunc(&sdlrandf, lib, "SDL_randf")
 	// purego.RegisterLibFunc(&sdlrandf_r, lib, "SDL_randf_r")
 	// purego.RegisterLibFunc(&sdlReadAsyncIO, lib, "SDL_ReadAsyncIO")
-	// purego.RegisterLibFunc(&sdlReadIO, lib, "SDL_ReadIO")
+	purego.RegisterLibFunc(&sdlReadIO, lib, "SDL_ReadIO")
 	// purego.RegisterLibFunc(&sdlReadProcess, lib, "SDL_ReadProcess")
 	// purego.RegisterLibFunc(&sdlReadS16BE, lib, "SDL_ReadS16BE")
 	// purego.RegisterLibFunc(&sdlReadS16LE, lib, "SDL_ReadS16LE")
