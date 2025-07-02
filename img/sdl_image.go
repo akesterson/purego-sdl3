@@ -3,7 +3,7 @@ package img
 import (
 	"unsafe"
 
-	"github.com/jupiterrider/purego-sdl3/sdl"
+	"github.com/akesterson/purego-sdl3/sdl"
 )
 
 type Animation struct {

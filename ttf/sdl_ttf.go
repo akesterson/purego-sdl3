@@ -3,8 +3,8 @@ package ttf
 import (
 	"unsafe"
 
-	"github.com/jupiterrider/purego-sdl3/internal/convert"
-	"github.com/jupiterrider/purego-sdl3/sdl"
+	"github.com/akesterson/purego-sdl3/internal/convert"
+	"github.com/akesterson/purego-sdl3/sdl"
 )
 
 const (

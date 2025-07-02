@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: purego-sdl3
-Source: https://github.com/jupiterrider/purego-sdl3
+Source: https://github.com/akesterson/purego-sdl3
 
 Files: *
 Comment: purego-sdl3

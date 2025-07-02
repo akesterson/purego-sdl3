@@ -4,7 +4,7 @@ import (
 	"unsafe"
 
 	"github.com/ebitengine/purego"
-	"github.com/jupiterrider/purego-sdl3/internal/convert"
+	"github.com/akesterson/purego-sdl3/internal/convert"
 )
 
 type PropertyType uint32

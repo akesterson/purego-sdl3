@@ -1,7 +1,7 @@
 package sdl
 
 import (
-	"github.com/jupiterrider/purego-sdl3/internal/convert"
+	"github.com/akesterson/purego-sdl3/internal/convert"
 )
 
 type GPUSwapchainComposition uint32

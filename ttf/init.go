@@ -4,8 +4,8 @@ import (
 	"runtime"
 
 	"github.com/ebitengine/purego"
-	"github.com/jupiterrider/purego-sdl3/internal/shared"
-	"github.com/jupiterrider/purego-sdl3/sdl"
+	"github.com/akesterson/purego-sdl3/internal/shared"
+	"github.com/akesterson/purego-sdl3/sdl"
 )
 
 var (
